@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Corea">
+<title>Corea de bolsillo</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Black+Han+Sans&family=Noto+Sans+KR:wght@700;900&display=swap">
+<style>
+:root{color-scheme:dark}
+html,body{height:100%;margin:0;background:#111111;color:#FFFFFF}
+body{overflow:hidden;font-family:'Archivo','Helvetica Neue',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+a{color:inherit}
+[hidden]{display:none!important}
+#app{height:100%;display:flex;justify-content:center;background:#111111}
+.scr{position:relative;width:100%;max-width:440px;height:100%;overflow:hidden}
+.scr > div{width:100%!important;height:100%!important;max-width:100%}
+.scr button{-webkit-appearance:none;appearance:none}
+.scr :focus-visible{outline:3px solid #F5B83D;outline-offset:2px}
+#pill{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:40;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font-size:13px;font-weight:900;font-stretch:110%;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:0 6px 20px -8px rgba(0,0,0,.7)}
+#tk{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#111111}
+#tk header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
+#tk h2{margin:0;font-size:14px;font-weight:900;font-stretch:110%;text-transform:uppercase;letter-spacing:.04em}
+#tk button{min-width:44px;min-height:44px;border:0;border-radius:50%;background:#262626;color:#FFFFFF;font:inherit;font-size:22px;font-weight:900;cursor:pointer}
+#tk .pg{flex:1;overflow:auto;padding:0 12px 16px;-webkit-overflow-scrolling:touch}
+#tk img{display:block;width:100%;height:auto;border-radius:4px;background:#FFFFFF}
+#lock{position:fixed;inset:0;z-index:60;display:flex;justify-content:center;background:#F2729F;color:#111111}
+#lock form{position:relative;width:100%;max-width:440px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:14px;padding:24px 20px 40px;overflow:hidden}
+#lock .ko{position:absolute;top:-40px;right:-60px;font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-size:300px;line-height:1;letter-spacing:-.04em;color:#111111}
+#lock h1{margin:0;font-size:52px;line-height:.9;font-weight:900;font-stretch:125%;letter-spacing:-.02em;text-transform:uppercase}
+#lock p{margin:0;font-size:16px;font-weight:700;line-height:1.35}
+#lock label{font-size:13px;font-weight:900;font-stretch:125%;text-transform:uppercase}
+#lock input{height:56px;box-sizing:border-box;padding:0 16px;border:3px solid #111111;border-radius:4px;background:#FFFFFF;color:#111111;font:inherit;font-size:20px;font-weight:800}
+#lock button{height:56px;border:0;border-radius:4px;background:#111111;color:#F2729F;font:inherit;font-size:17px;font-weight:900;font-stretch:125%;text-transform:uppercase;cursor:pointer}
+#lock .err{min-height:22px;font-size:15px;font-weight:900}
+#boot{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#111111;color:#BDBDBD;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:1ms!important;transition-duration:1ms!important}}
+</style>
+<style id="screen-css"></style>
+</head>
+<body>
+<div id="boot">Abriendo…</div>
+<div id="app"></div>
+<div id="pill" hidden></div>
+<div id="tk" hidden>
+  <header><h2 id="tk-t">Billete</h2><button type="button" id="tk-x" aria-label="Cerrar billete">×</button></header>
+  <div class="pg"><img id="tk-img" alt="Billete del KTX"></div>
+</div>
+<div id="lock" hidden>
+  <form id="lock-f" autocomplete="off">
+    <span class="ko" aria-hidden="true">한국</span>
+    <h1>Corea<br>de bolsillo</h1>
+    <p>Del 5 al 15 de octubre de 2026</p>
+    <label for="pw">Contraseña</label>
+    <input id="pw" name="pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" required>
+    <span class="err" id="pw-err" role="alert"></span>
+    <button type="submit" id="pw-go">Entrar</button>
+  </form>
+</div>
+<div id="tpls" hidden></div>
+
+<script>
+var BUILD = '202609222004-64896338';
+var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
+var ITER = 400000;
+
+(function () {
+  var KEY_STORE = 'corea.key.' + SALT_B64.slice(0, 8);
+  function b64(buf) { var s = '', a = new Uint8Array(buf); for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s); }
+  function unb64(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  function store(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  var bundle = null;
+  function getBundle() {
+    if (bundle) return Promise.resolve(bundle);
+    return fetch('app.bin', { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error('app.bin ' + r.status);
+      return r.arrayBuffer();
+    }).then(function (buf) { bundle = new Uint8Array(buf); return bundle; });
+  }
+  function deriveKey(pw) {
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']).then(function (base) {
+      return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: unb64(SALT_B64), iterations: ITER, hash: 'SHA-256' }, base, 256);
+    });
+  }
+  function decrypt(raw) {
+    return Promise.all([getBundle(), crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt'])]).then(function (r) {
+      var b = r[0], key = r[1];
+      var iv = b.slice(0, 12), ct = b.slice(12);
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ct);
+    }).then(function (plain) { return JSON.parse(new TextDecoder().decode(plain)); });
+  }
+
+  var lock = document.getElementById('lock'), boot = document.getElementById('boot');
+  function askPassword(msg) {
+    boot.hidden = true;
+    lock.hidden = false;
+    document.getElementById('pw-err').textContent = msg || '';
+  }
+  document.getElementById('lock-f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var pw = document.getElementById('pw').value;
+    var btn = document.getElementById('pw-go');
+    btn.disabled = true; btn.textContent = 'Comprobando…';
+    var rawKey;
+    deriveKey(pw).then(function (raw) { rawKey = raw; return decrypt(raw); }).then(function (payload) {
+      store(KEY_STORE, b64(rawKey));
+      lock.hidden = true;
+      start(payload);
+    }).catch(function (err) {
+      btn.disabled = false; btn.textContent = 'Entrar';
+      if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
+        askPassword('Sin conexión: la primera vez hace falta internet.');
+      } else {
+        askPassword('Contraseña incorrecta.');
+      }
+    });
+  });
+
+  var saved = load(KEY_STORE);
+  if (saved) {
+    decrypt(unb64(saved)).then(start).catch(function (err) {
+      if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
+        boot.textContent = 'Sin conexión y sin copia guardada todavía';
+      } else { store(KEY_STORE, null); askPassword('La contraseña ha cambiado. Escríbela de nuevo.'); }
+    });
+  } else {
+    askPassword('');
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+
+  // ---------- motor de pantallas ----------
+  function start(payload) {
+    document.getElementById('screen-css').textContent = payload.css;
+    document.getElementById('tpls').innerHTML = payload.templates;
+    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS };')();
+    var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS;
+    boot.hidden = true;
+
+    var HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
+    var ONLY = /^\{\{\s*([^}]+?)\s*\}\}$/;
+    function lookup(path, scope) {
+      if (path === 'true') return true;
+      if (path === 'false') return false;
+      if (path === 'null') return null;
+      if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+      var parts = path.split('.'), v = scope;
+      for (var i = 0; i < parts.length; i++) { if (v == null) return undefined; v = v[parts[i]]; }
+      return v;
+    }
+    function interp(str, scope) { return str.replace(HOLE, function (_, p) { var v = lookup(p, scope); return v == null ? '' : String(v); }); }
+    function child(scope, name, val, idx) { var s = Object.create(scope); s[name] = val; s.$index = idx; return s; }
+    function render(node, scope, out) {
+      if (node.nodeType === 3) { out.push(document.createTextNode(interp(node.data, scope))); return; }
+      if (node.nodeType !== 1) return;
+      var tag = node.localName;
+      if (tag === 'sc-for') {
+        var list = lookup(ONLY.exec(node.getAttribute('list'))[1], scope) || [];
+        var as = node.getAttribute('as') || 'item';
+        for (var i = 0; i < list.length; i++) { var sc = child(scope, as, list[i], i); node.childNodes.forEach(function (c) { render(c, sc, out); }); }
+        return;
+      }
+      if (tag === 'sc-if') {
+        if (lookup(ONLY.exec(node.getAttribute('value'))[1], scope)) node.childNodes.forEach(function (c) { render(c, scope, out); });
+        return;
+      }
+      var el = node.namespaceURI === 'http://www.w3.org/2000/svg' ? document.createElementNS(node.namespaceURI, tag) : document.createElement(tag);
+      for (var a = 0; a < node.attributes.length; a++) {
+        var at = node.attributes[a], name = at.name, val = at.value;
+        if (name.indexOf('hint-') === 0) continue;
+        var m = ONLY.exec(val);
+        if (name === 'onclick') { el.__h = m ? lookup(m[1], scope) : null; continue; }
+        var v = m ? lookup(m[1], scope) : interp(val, scope);
+        if (v == null || v === false) continue;
+        v = String(v);
+        if (v.indexOf('asset:') === 0) v = ASSETS[v.slice(6)] || '';
+        el.setAttribute(name, v);
+      }
+      if (tag === 'a') {
+        var href = el.getAttribute('href') || '';
+        if (/^https?:/.test(href)) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+      }
+      var co = [];
+      node.childNodes.forEach(function (c) { render(c, scope, co); });
+      co.forEach(function (c) { el.appendChild(c); });
+      out.push(el);
+    }
+    function morph(a, b) {
+      if (a.nodeType !== b.nodeType || a.nodeName !== b.nodeName) { a.replaceWith(b); return; }
+      if (a.nodeType === 3) { if (a.data !== b.data) a.data = b.data; return; }
+      var i, n;
+      for (i = a.attributes.length - 1; i >= 0; i--) { n = a.attributes[i].name; if (!b.hasAttribute(n)) a.removeAttribute(n); }
+      for (i = 0; i < b.attributes.length; i++) { n = b.attributes[i]; if (a.getAttribute(n.name) !== n.value) a.setAttribute(n.name, n.value); }
+      a.__h = b.__h;
+      morphKids(a, b);
+    }
+    function morphKids(a, b) {
+      var ak = Array.prototype.slice.call(a.childNodes), bk = Array.prototype.slice.call(b.childNodes);
+      for (var i = 0; i < bk.length; i++) { if (i < ak.length) morph(ak[i], bk[i]); else a.appendChild(bk[i]); }
+      for (var j = bk.length; j < ak.length; j++) ak[j].remove();
+    }
+
+    function DCLogic(props) { this.props = props || {}; this.state = {}; }
+    DCLogic.prototype.setState = function (o) {
+      var p = typeof o === 'function' ? o(this.state, this.props) : o;
+      this.state = Object.assign({}, this.state, p);
+      if (this.__render) this.__render();
+    };
+    DCLogic.prototype.forceUpdate = function () { if (this.__render) this.__render(); };
+
+    var app = document.getElementById('app'), pill = document.getElementById('pill');
+    var screens = {}, current = null;
+    function build(name) {
+      var tpl = document.getElementById('t-' + name);
+      var inst = new (SCRIPTS[name](DCLogic))({});
+      var host = document.createElement('div');
+      host.className = 'scr'; host.hidden = true;
+      app.appendChild(host);
+      inst.__render = function () {
+        var vals = inst.renderVals ? inst.renderVals() : {};
+        var out = [];
+        tpl.content.childNodes.forEach(function (c) { render(c, vals, out); });
+        var tmp = document.createElement('div');
+        out.forEach(function (c) { tmp.appendChild(c); });
+        morphKids(host, tmp);
+      };
+      inst.__render();
+      if (inst.componentDidMount) { try { inst.componentDidMount(); } catch (e) {} }
+      return (screens[name] = { host: host, inst: inst });
+    }
+
+    // Hoy = el día de hoy del viaje
+    function todayRoute() {
+      var d = new Date(), y = d.getFullYear(), mo = d.getMonth(), day = d.getDate();
+      var start = new Date(2026, 9, 5), today = new Date(y, mo, day);
+      var diff = Math.round((start - today) / 86400000);
+      if (diff > 0) return { name: 'C-Dia-05', pill: diff === 1 ? 'Mañana empieza el viaje' : 'Faltan ' + diff + ' días' };
+      if (y === 2026 && mo === 9 && day >= 5 && day <= 14) return { name: day === 10 ? 'C-Hoy' : 'C-Dia-' + (day < 10 ? '0' : '') + day };
+      return { name: 'C-Dia-14' };
+    }
+    function show(route) {
+      var info = route === 'hoy' || !route ? todayRoute() : { name: route };
+      var name = SCRIPTS[info.name] ? info.name : 'C-Hoy';
+      var s = screens[name] || build(name);
+      if (current && current !== s) current.host.hidden = true;
+      s.host.hidden = false;
+      current = s;
+      pill.hidden = !info.pill;
+      pill.textContent = info.pill || '';
+    }
+    function go(route) { if (location.hash.slice(1) === route) show(route); else location.hash = route; }
+    window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+
+    var tk = document.getElementById('tk');
+    document.getElementById('tk-x').addEventListener('click', function () { tk.hidden = true; });
+
+    app.addEventListener('click', function (e) {
+      var el = e.target;
+      while (el && el !== app) { if (el.__h) { el.__h(e); break; } el = el.parentNode; }
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a || !app.contains(a)) return;
+      var href = a.getAttribute('href') || '';
+      var m = /^\/?([\w-]+)\.dc\.html$/.exec(href);
+      if (m) {
+        e.preventDefault();
+        var inNav = a.closest('nav[aria-label="Secciones"]');
+        go(m[1] === 'C-Hoy' && inNav ? 'hoy' : m[1]);
+        return;
+      }
+      if (href.indexOf('ticket/') === 0) {
+        e.preventDefault();
+        var seat = /ktx(\d+)_(\w+)\.png/.exec(href);
+        document.getElementById('tk-img').src = ASSETS[href] || '';
+        document.getElementById('tk-t').textContent = seat ? 'KTX ' + seat[1] + ' · asiento ' + seat[2] : 'Billete';
+        tk.hidden = false;
+        return;
+      }
+      if (href.charAt(0) === '#' || href === '') e.preventDefault();
+    });
+
+    show(location.hash.slice(1) || 'hoy');
+  }
+})();
+</script>
+</body>
+</html>
