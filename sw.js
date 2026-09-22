@@ -1,5 +1,5 @@
 // Corea de bolsillo · service worker
-var VERSION = '202609222004-64896338';
+var VERSION = '202609222018-331cef5d';
 var CORE = 'corea-core-' + VERSION;
 var FONTS = 'corea-fonts';
 var FILES = ['./', 'index.html', 'app.bin', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
