@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,7 +32,48 @@ a{color:inherit}
 #tk h2{margin:0;font-size:14px;font-weight:900;font-stretch:110%;text-transform:uppercase;letter-spacing:.04em}
 #tk button{min-width:44px;min-height:44px;border:0;border-radius:50%;background:#262626;color:#FFFFFF;font:inherit;font-size:22px;font-weight:900;cursor:pointer}
 #tk .pg{flex:1;overflow:auto;padding:0 12px 16px;-webkit-overflow-scrolling:touch}
-#tk img{display:block;width:100%;height:auto;border-radius:4px;background:#FFFFFF}
+*{touch-action:manipulation}
+#tk .pg{touch-action:pan-x pan-y}
+#tk-box{position:relative;width:100%;transition:width 260ms cubic-bezier(.32,.72,0,1)}
+#tk .pg.zoom #tk-box{width:240%}
+#tk-qr{position:absolute;left:75.69%;top:41.05%;width:7.43%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
+#tk .hint{margin:10px 0 0;color:#BDBDBD;font-size:12px;font-weight:800;text-align:center;text-transform:uppercase;letter-spacing:.04em}
+#qc{position:fixed;z-index:45;top:10px;right:max(12px,calc((100vw - 440px) / 2 + 12px));display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:2px solid #FFFFFF;border-radius:50%;background:#111111;color:#FFFFFF;cursor:pointer;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)}
+#qc:active{transform:scale(.92)}
+#hb{position:fixed;z-index:45;top:10px;right:max(66px,calc((100vw - 440px) / 2 + 66px));display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:2px solid #FFFFFF;border-radius:50%;background:#111111;color:#FFFFFF;cursor:pointer;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)}
+#hb:active{transform:scale(.92)}
+#hb[hidden],#hs[hidden],#qc[hidden]{display:none!important}
+#hb.pop svg{animation:hb-pop 520ms cubic-bezier(.3,1.6,.5,1)}
+@keyframes hb-pop{0%{transform:scale(1)}40%{transform:scale(.7) rotate(-8deg)}100%{transform:scale(1)}}
+#hs{position:fixed;inset:0;z-index:55}
+#hs .bd{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity 360ms ease}
+#hs .sh{position:absolute;left:50%;bottom:0;width:100%;max-width:440px;box-sizing:border-box;max-height:92%;overflow-y:auto;overscroll-behavior:contain;border-radius:22px 22px 0 0;background:#111111;color:#FFFFFF;transform:translate(-50%,100%);transition:transform 560ms cubic-bezier(.32,.72,0,1);padding:10px 16px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -20px 60px -20px rgba(0,0,0,.8)}
+#hs.open .bd{opacity:1}
+#hs.open .sh{transform:translate(-50%,0)}
+#hs.drag .sh{transition:none}
+#hs .grab{width:44px;height:5px;margin:0 auto 12px;border-radius:3px;background:#3A3A3A}
+#hs .ph{position:relative;height:168px;margin:0 -16px;overflow:hidden;background:#222}
+#hs .ph img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 1100ms cubic-bezier(.2,.8,.2,1)}
+#hs.open .ph img{transform:scale(1)}
+#hs .ph .ko{position:absolute;left:14px;bottom:-18px;font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-size:84px;line-height:1;letter-spacing:-.04em;color:var(--hc)}
+#hs .st{opacity:0;transform:translateY(18px);transition:opacity 420ms ease,transform 620ms cubic-bezier(.32,.72,0,1)}
+#hs.open .st{opacity:1;transform:none}
+#hs.open .st:nth-child(3){transition-delay:90ms}#hs.open .st:nth-child(4){transition-delay:150ms}#hs.open .st:nth-child(5){transition-delay:210ms}#hs.open .st:nth-child(6){transition-delay:270ms}#hs.open .st:nth-child(7){transition-delay:330ms}
+#hs .eb{margin:26px 0 2px;font-size:13px;font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:.03em;color:var(--hc)}
+#hs h2{margin:0;font-size:34px;line-height:.95;font-weight:900;font-stretch:125%;letter-spacing:-.02em;text-transform:uppercase}
+#hs .kn{margin:6px 0 0;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:17px;color:#BDBDBD}
+#hs .go{display:flex;align-items:center;justify-content:space-between;gap:10px;height:62px;margin-top:18px;padding:0 18px;border-radius:6px;background:var(--hc);color:#111111;font-size:18px;font-weight:900;font-stretch:125%;text-transform:uppercase;text-decoration:none}
+#hs .go:active,#hs .row a:active,#hs .cp:active{transform:scale(.97)}
+#hs .go svg{transition:transform 300ms cubic-bezier(.3,1.6,.5,1)}
+#hs .go:active svg{transform:translateX(6px)}
+#hs .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin-top:8px}
+#hs .row a{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border:2px solid #3A3A3A;border-radius:6px;color:#FFFFFF;font-size:14px;font-weight:900;font-stretch:110%;text-transform:uppercase;text-decoration:none}
+#hs .tx{margin-top:14px;padding:16px;border-radius:6px;background:#FFFFFF;color:#111111}
+#hs .tx .lb{font-size:12px;font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:.03em}
+#hs .tx .ad{margin:6px 0 4px;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:26px;line-height:1.2}
+#hs .tx .pl{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:16px}
+#hs .cp{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:46px;margin-top:12px;border:0;border-radius:6px;background:#111111;color:#FFFFFF;font:inherit;font-size:14px;font-weight:900;text-transform:uppercase;cursor:pointer;transition:background-color 200ms ease}
+#hs .cp.ok{background:var(--hc);color:#111111}
 #lock{position:fixed;inset:0;z-index:60;display:flex;justify-content:center;background:#F2729F;color:#111111}
 #lock form{position:relative;width:100%;max-width:440px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:14px;padding:24px 20px 40px;overflow:hidden}
 #lock .ko{position:absolute;top:-40px;right:-60px;font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-size:300px;line-height:1;letter-spacing:-.04em;color:#111111}
@@ -51,9 +92,23 @@ a{color:inherit}
 <div id="boot">Abriendo…</div>
 <div id="app"></div>
 <div id="pill" hidden></div>
+<button type="button" id="hb" aria-label="Volver al hotel" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5.5 9.5V20h13V9.5"></path><path d="M10 20v-5h4v5"></path></svg></button>
+<div id="hs" hidden role="dialog" aria-modal="true" aria-labelledby="hs-name">
+  <div class="bd" id="hs-bd"></div>
+  <div class="sh" id="hs-sh">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="ph"><img id="hs-img" alt=""><span class="ko" id="hs-city" aria-hidden="true"></span></div>
+    <p class="eb st" id="hs-eb"></p>
+    <div class="st"><h2 id="hs-name"></h2><p class="kn" id="hs-kn" lang="ko"></p></div>
+    <a class="go st" id="hs-naver" href="#"><span>Cómo llegar<small style="display:block;margin-top:3px;font-size:11px;font-weight:800;opacity:.7;letter-spacing:.02em">Abre Naver Map</small></span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="square" aria-hidden="true"><path d="M4 12h15"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+    <div class="row st"><a id="hs-kakao" href="#" target="_blank" rel="noopener">Kakao Map</a><a id="hs-tel" href="#">Llamar</a></div>
+    <div class="tx st"><div class="lb">Para el taxi · enséñale esto</div><div class="ad" id="hs-ad" lang="ko"></div><div class="pl" lang="ko">이 주소로 가 주세요</div><button type="button" class="cp" id="hs-cp">Copiar dirección</button></div>
+  </div>
+</div>
+<button type="button" id="qc" aria-label="Abrir la calculadora de wones" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><rect x="5" y="3" width="14" height="18"></rect><path d="M8 7h8"></path><path d="M8 11.5h.5M11.75 11.5h.5M15.5 11.5h.5M8 15h.5M11.75 15h.5M15.5 15h.5M8 18.5h.5M11.75 18.5h.5M15.5 18.5h.5"></path></svg></button>
 <div id="tk" hidden>
   <header><h2 id="tk-t">Billete</h2><button type="button" id="tk-x" aria-label="Cerrar billete">×</button></header>
-  <div class="pg"><img id="tk-img" alt="Billete del KTX"></div>
+  <div class="pg" id="tk-pg"><div id="tk-box"><img id="tk-img" alt="Billete del KTX" style="display:block;width:100%;height:auto;border-radius:4px;background:#FFFFFF"><img id="tk-qr" alt="Código QR del billete"></div><p class="hint">Toca el billete para ampliarlo</p></div>
 </div>
 <div id="lock" hidden>
   <form id="lock-f" autocomplete="off">
@@ -69,7 +124,7 @@ a{color:inherit}
 <div id="tpls" hidden></div>
 
 <script>
-var BUILD = '202609222018-331cef5d';
+var BUILD = '202609230733-40fb98d1';
 var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
 var ITER = 400000;
 
@@ -147,8 +202,8 @@ var ITER = 400000;
   function start(payload) {
     document.getElementById('screen-css').textContent = payload.css;
     document.getElementById('tpls').innerHTML = payload.templates;
-    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS };')();
-    var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS;
+    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS };')();
+    var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS, HOTELS = mod.HOTELS;
     boot.hidden = true;
 
     var HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
@@ -256,9 +311,13 @@ var ITER = 400000;
       var info = route === 'hoy' || !route ? todayRoute() : { name: route };
       var name = SCRIPTS[info.name] ? info.name : 'C-Hoy';
       var s = screens[name] || build(name);
+      var prev = current;
       if (current && current !== s) current.host.hidden = true;
       s.host.hidden = false;
       current = s;
+      document.getElementById('qc').hidden = name === 'C-Conversor' || !document.getElementById('tk').hidden;
+      document.getElementById('hb').hidden = !document.getElementById('tk').hidden;
+      if (prev !== s && s.inst.onShow) { try { s.inst.onShow(); } catch (e) {} }
       pill.hidden = !info.pill;
       pill.textContent = info.pill || '';
     }
@@ -266,7 +325,9 @@ var ITER = 400000;
     window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
 
     var tk = document.getElementById('tk');
-    document.getElementById('tk-x').addEventListener('click', function () { tk.hidden = true; });
+    document.getElementById('tk-x').addEventListener('click', function () { tk.hidden = true; document.getElementById('hb').hidden = false; document.getElementById('qc').hidden = !!(current && current.host.querySelector('[aria-label^="Cambiar a"]')); });
+      document.getElementById('tk-pg').addEventListener('click', function () { this.classList.toggle('zoom'); });
+      document.getElementById('qc').addEventListener('click', function () { go('C-Conversor'); });
 
     app.addEventListener('click', function (e) {
       var el = e.target;
@@ -283,15 +344,79 @@ var ITER = 400000;
       }
       if (href.indexOf('ticket/') === 0) {
         e.preventDefault();
-        var seat = /ktx(\d+)_(\w+)\.png/.exec(href);
+        var seat = /ktx(\d+)_(\w+)\.(png|jpg)/.exec(href);
         document.getElementById('tk-img').src = ASSETS[href] || '';
+        document.getElementById('tk-qr').src = seat ? (ASSETS['tix/qr_ktx' + seat[1] + '_' + seat[2] + '.png'] || '') : '';
         document.getElementById('tk-t').textContent = seat ? 'KTX ' + seat[1] + ' · asiento ' + seat[2] : 'Billete';
-        tk.hidden = false;
+        document.getElementById('tk-pg').classList.remove('zoom');
+        document.getElementById('tk').hidden = false;
+        document.getElementById('qc').hidden = true;
+        document.getElementById('hb').hidden = true;
         return;
       }
       if (href.charAt(0) === '#' || href === '') e.preventDefault();
     });
 
+
+    // ---------- volver al hotel ----------
+    (function () {
+      var hb = document.getElementById('hb'), hs = document.getElementById('hs'), sh = document.getElementById('hs-sh');
+      var CITY = { '#4FD1A5': '서울', '#F2729F': '경주', '#5AB4F0': '부산' };
+      function tonight() {
+        var d = new Date(); if (d.getHours() < 5) d = new Date(d.getTime() - 5 * 3600000);
+        var y = d.getFullYear(), m = d.getMonth(), day = d.getDate(), note = '';
+        var idx = 0;
+        if (y === 2026 && m === 9) {
+          if (day <= 5) { idx = 0; if (day === 5) note = 'Hoy dormís en el avión · el primer hotel'; }
+          else if (day <= 9) idx = 0; else if (day <= 11) idx = 1; else if (day === 12) idx = 2; else idx = 3;
+          if (day === 14) note = 'Aquí os guardan las maletas';
+        } else if (y > 2026 || (y === 2026 && m > 9)) idx = 3;
+        return { h: HOTELS[idx], note: note };
+      }
+      function fill() {
+        var t = tonight(), h = t.h;
+        hs.style.setProperty('--hc', h.col);
+        document.getElementById('hs-img').src = ASSETS[h.img] || '';
+        document.getElementById('hs-city').textContent = CITY[h.col] || '';
+        document.getElementById('hs-eb').textContent = t.note || ('Esta noche · ' + h.dates);
+        document.getElementById('hs-name').textContent = h.name;
+        document.getElementById('hs-kn').textContent = h.ko;
+        document.getElementById('hs-ad').textContent = h.addr;
+        document.getElementById('hs-naver').href = 'nmap://route/public?dlat=' + h.lat + '&dlng=' + h.lng + '&dname=' + encodeURIComponent(h.ko) + '&appname=corea.bolsillo';
+        document.getElementById('hs-kakao').href = 'https://map.kakao.com/link/to/' + h.kakao;
+        var tel = document.getElementById('hs-tel');
+        tel.hidden = !h.tel; tel.href = 'tel:' + (h.tel || '').replace(/-/g, '');
+        var cp = document.getElementById('hs-cp'); cp.textContent = 'Copiar dirección'; cp.classList.remove('ok');
+      }
+      function open() {
+        fill(); hs.hidden = false; sh.scrollTop = 0;
+        hb.classList.remove('pop'); void hb.offsetWidth; hb.classList.add('pop');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { hs.classList.add('open'); }); });
+      }
+      function close() {
+        hs.classList.remove('open'); sh.style.transform = '';
+        setTimeout(function () { if (!hs.classList.contains('open')) hs.hidden = true; }, 480);
+      }
+      hb.addEventListener('click', open);
+      document.getElementById('hs-bd').addEventListener('click', close);
+      document.getElementById('hs-cp').addEventListener('click', function () {
+        var btn = this, txt = document.getElementById('hs-ad').textContent;
+        function ok() { btn.textContent = 'Copiada ✓'; btn.classList.add('ok'); }
+        try { navigator.clipboard.writeText(txt).then(ok, function () { selectAd(); }); } catch (e) { selectAd(); }
+        function selectAd() { var r = document.createRange(); r.selectNodeContents(document.getElementById('hs-ad')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Seleccionada: pulsa copiar'; }
+      });
+      var y0 = null, dy = 0;
+      sh.addEventListener('touchstart', function (e) { if (sh.scrollTop > 0) return; y0 = e.touches[0].clientY; dy = 0; }, { passive: true });
+      sh.addEventListener('touchmove', function (e) {
+        if (y0 == null) return; dy = e.touches[0].clientY - y0;
+        if (dy > 0) { hs.classList.add('drag'); sh.style.transform = 'translate(-50%,' + dy + 'px)'; }
+      }, { passive: true });
+      sh.addEventListener('touchend', function () {
+        if (y0 == null) return; hs.classList.remove('drag'); y0 = null;
+        if (dy > 90) close(); else sh.style.transform = '';
+      });
+      window.__hotelBtn = hb;
+    })();
     show(location.hash.slice(1) || 'hoy');
   }
 })();
