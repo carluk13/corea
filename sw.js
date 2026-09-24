@@ -1,5 +1,5 @@
 // Corea de bolsillo · service worker
-var VERSION = '202609241515-2bc9e0ab';
+var VERSION = '202609241730-2bc9e0ab';
 var CORE = 'corea-core-' + VERSION;
 var FONTS = 'corea-fonts';
 var DOCS = 'corea-docs';
@@ -57,6 +57,21 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(caches.open(DOCS).then(function (c) {
       return c.match(req, { ignoreSearch: true }).then(function (hit) {
         return hit || fetch(req).then(function (res) { if (res && res.ok) c.put(req, res.clone()); return res; });
+      });
+    }));
+    return;
+  }
+  // app.bin: red primero; si la red va lenta se usa la copia guardada, pero la descarga sigue y la guarda al terminar.
+  // Con ?r= (la página ha visto que su copia era antigua) se espera a la red sin límite de tiempo.
+  if (/\/app\.bin$/.test(url.pathname)) {
+    e.respondWith(caches.open(CORE).then(function (c) {
+      var net = fetch(req, { cache: 'no-cache' }).then(function (res) {
+        if (res && res.ok) c.put('app.bin', res.clone());
+        return res;
+      });
+      if (url.searchParams.has('r')) return net;
+      return withTimeout(net, 8000).catch(function () {
+        return c.match('app.bin').then(function (hit) { return hit || net; });
       });
     }));
     return;

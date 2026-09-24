@@ -209,9 +209,10 @@ a{color:inherit}
 <div id="tpls" hidden></div>
 
 <script>
-var BUILD = '202609241515-2bc9e0ab';
+var BUILD = '202609241730-2bc9e0ab';
 var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
 var ITER = 600000;
+var APP_SHA = 'ZmgwPcZvx0093oqUJ2NBkgh+mK2JBE9JGNnTY24UfvM=';
 
 (function () {
   var KEY_STORE = 'corea.key.' + SALT_B64.slice(0, 8);
@@ -221,11 +222,45 @@ var ITER = 600000;
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
   var bundle = null, RAWKEY = null;
-  function getBundle() {
-    if (bundle) return Promise.resolve(bundle);
-    return fetch('app.bin', { cache: 'no-cache' }).then(function (r) {
+  // app.bin va atado a esta versión de la página por su huella (SHA-256). Si el móvil tiene guardada
+  // una copia antigua (p. ej. de antes de cambiar la contraseña), se detecta y se baja la buena.
+  function fetchBin(fresh) {
+    return fetch('app.bin?v=' + BUILD + (fresh ? '&r=' + Date.now() : ''), { cache: fresh ? 'reload' : 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('app.bin ' + r.status);
       return r.arrayBuffer();
+    });
+  }
+  function sha(buf) { return crypto.subtle.digest('SHA-256', buf).then(function (d) { return b64(d); }); }
+  function swRefresh() {
+    if (!('serviceWorker' in navigator)) return Promise.resolve();
+    return navigator.serviceWorker.getRegistration().then(function (reg) {
+      if (!reg) return;
+      return new Promise(function (res) {
+        var done = false, fin = function () { if (!done) { done = true; res(); } };
+        navigator.serviceWorker.addEventListener('controllerchange', fin);
+        setTimeout(fin, 25000);
+        reg.update().then(function () {
+          var w = reg.installing || reg.waiting;
+          if (!w) { fin(); return; }
+          w.addEventListener('statechange', function () { if (w.state === 'redundant') fin(); });
+        }).catch(fin);
+      });
+    }).catch(function () {});
+  }
+  function updating() {
+    var bt = document.getElementById('pw-go'); if (bt && bt.disabled) bt.textContent = 'Actualizando la app…';
+    if (!boot.hidden) boot.textContent = 'Actualizando la app…';
+  }
+  function getBundle() {
+    if (bundle) return Promise.resolve(bundle);
+    return fetchBin(false).then(function (buf) {
+      return sha(buf).then(function (h) {
+        if (h === APP_SHA) return buf;
+        updating();
+        return swRefresh().then(function () { return fetchBin(true); }).then(function (b2) {
+          return sha(b2).then(function (h2) { if (h2 !== APP_SHA) throw new Error('STALE'); return b2; });
+        });
+      });
     }).then(function (buf) { bundle = new Uint8Array(buf); return bundle; });
   }
   function deriveKey(pw) {
@@ -261,7 +296,9 @@ var ITER = 600000;
       start(payload);
     }).catch(function (err) {
       btn.disabled = false; btn.textContent = 'Entrar';
-      if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
+      if (err && /STALE/.test(String(err.message || err))) {
+        askPassword('Hay una versión nueva y no se ha podido bajar entera. Comprueba que tienes internet y dale otra vez a Entrar.');
+      } else if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
         askPassword('Sin conexión: la primera vez hace falta internet.');
       } else {
         askPassword('Contraseña incorrecta.');
@@ -272,7 +309,9 @@ var ITER = 600000;
   var saved = load(KEY_STORE);
   if (saved) {
     decrypt(unb64(saved)).then(function (p) { RAWKEY = unb64(saved); start(p); }).catch(function (err) {
-      if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
+      if (err && /STALE/.test(String(err.message || err))) {
+        askPassword('Hay una versión nueva y no se ha podido bajar entera. Comprueba que tienes internet y cierra y abre la app.');
+      } else if (err && /app\.bin|Failed to fetch|NetworkError|Load failed/i.test(String(err.message || err))) {
         boot.textContent = 'Sin conexión y sin copia guardada todavía';
       } else { store(KEY_STORE, null); askPassword('La contraseña ha cambiado. Escríbela de nuevo.'); }
     });
