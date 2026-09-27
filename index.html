@@ -21,12 +21,21 @@ html,body{height:100%;margin:0;background:#111111;color:#FFFFFF}
 body{overflow:hidden;font-family:'Archivo','Helvetica Neue',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 a{color:inherit}
 [hidden]{display:none!important}
-#app{height:100%;display:flex;justify-content:center;background:#111111}
+#app{height:100%;box-sizing:border-box;display:flex;justify-content:center;background:#111111;padding-top:calc(54px + env(safe-area-inset-top,0px))}
+body.nobar #app{padding-top:0}
+#bar{position:fixed;top:0;left:50%;z-index:45;display:flex;align-items:center;gap:8px;width:100%;max-width:440px;height:calc(54px + env(safe-area-inset-top,0px));box-sizing:border-box;padding:env(safe-area-inset-top,0px) 10px 0 16px;transform:translateX(-50%);background:var(--bb,#111111);color:var(--bf,#FFFFFF);transition:background-color 320ms ease,color 320ms ease}
+body.nobar #bar{display:none}
+#bar .ck{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1;line-height:1}
+#bar .ck small{font-size:11px;font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:.04em;opacity:.75}
+#bar .ck b{margin-top:2px;font-size:26px;font-weight:900;font-stretch:62%;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+#bar .ck b #pill{margin-left:8px;font-size:12px;font-weight:900;font-stretch:110%;text-transform:uppercase;opacity:.75}
+#bar .rb{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:44px;height:44px;box-sizing:border-box;border:2px solid currentColor;border-radius:50%;background:transparent;color:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;transition:transform 160ms cubic-bezier(.3,1.6,.5,1)}
+#bar .rb:active{transform:scale(.9)}
+#bar .rb[hidden]{display:none!important}
 .scr{position:relative;width:100%;max-width:440px;height:100%;overflow:hidden}
 .scr > div{width:100%!important;height:100%!important;max-width:100%}
 .scr button{-webkit-appearance:none;appearance:none}
 .scr :focus-visible{outline:3px solid #F5B83D;outline-offset:2px}
-#pill{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:40;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font-size:13px;font-weight:900;font-stretch:110%;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;box-shadow:0 6px 20px -8px rgba(0,0,0,.7)}
 #tk{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#111111}
 #tk header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
 #tk h2{margin:0;font-size:14px;font-weight:900;font-stretch:110%;text-transform:uppercase;letter-spacing:.04em}
@@ -38,11 +47,22 @@ a{color:inherit}
 #tk .pg.zoom #tk-box{width:240%}
 #tk-qr{position:absolute;left:75.69%;top:41.05%;width:7.43%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
 #tk .hint{margin:10px 0 0;color:#BDBDBD;font-size:12px;font-weight:800;text-align:center;text-transform:uppercase;letter-spacing:.04em}
-#qc{position:fixed;z-index:45;top:10px;right:max(12px,calc((100vw - 440px) / 2 + 12px));display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:2px solid #FFFFFF;border-radius:50%;background:#111111;color:#FFFFFF;cursor:pointer;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)}
-#qc:active{transform:scale(.92)}
-#hb{position:fixed;z-index:45;top:10px;right:max(66px,calc((100vw - 440px) / 2 + 66px));display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:2px solid #FFFFFF;border-radius:50%;background:#111111;color:#FFFFFF;cursor:pointer;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)}
-#hb:active{transform:scale(.92)}
-#hb[hidden],#hs[hidden],#qc[hidden]{display:none!important}
+#hs[hidden]{display:none!important}
+#tx{position:fixed;inset:0;z-index:56;display:flex;justify-content:center;background:#111111;color:#FFFFFF;opacity:0;transform:scale(.98);transition:opacity 260ms ease,transform 420ms cubic-bezier(.32,.72,0,1)}
+#tx.open{opacity:1;transform:none}
+#tx .in{display:flex;flex-direction:column;gap:20px;width:100%;max-width:440px;box-sizing:border-box;padding:calc(14px + env(safe-area-inset-top,0px)) 20px calc(22px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+#tx header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#tx header span{font-size:13px;font-weight:900;font-stretch:125%;text-transform:uppercase;color:var(--tc)}
+#tx .x{flex-shrink:0;width:44px;height:44px;border:0;border-radius:50%;background:#262626;color:#FFFFFF;font:inherit;font-size:22px;font-weight:900;cursor:pointer}
+#tx .pl{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:34px;line-height:1.2}
+#tx .cd{display:flex;flex-direction:column;justify-content:center;gap:16px;flex:1;min-height:0;padding:24px 20px;border-radius:6px;background:var(--tc);color:#111111}
+#tx .nm{font-family:'Black Han Sans','Noto Sans KR',sans-serif;font-size:52px;line-height:1.05;word-break:keep-all;overflow-wrap:anywhere}
+#tx .ad{font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:30px;line-height:1.3;word-break:keep-all;overflow-wrap:anywhere}
+#tx .es{display:flex;flex-direction:column;gap:4px;color:#BDBDBD}
+#tx .es small{font-size:13px;font-weight:800;font-stretch:110%;text-transform:uppercase}
+#tx .es span{font-size:16px;line-height:1.4;color:#FFFFFF}
+#tx .cp{display:flex;align-items:center;justify-content:center;height:50px;border:2px solid #FFFFFF;border-radius:4px;background:transparent;color:#FFFFFF;font:inherit;font-size:14px;font-weight:900;text-transform:uppercase;cursor:pointer}
+#tx .cp.ok{border-color:var(--tc);background:var(--tc);color:#111111}
 #hb.pop svg{animation:hb-pop 520ms cubic-bezier(.3,1.6,.5,1)}
 @keyframes hb-pop{0%{transform:scale(1)}40%{transform:scale(.7) rotate(-8deg)}100%{transform:scale(1)}}
 #hs{position:fixed;inset:0;z-index:55}
@@ -123,6 +143,7 @@ a{color:inherit}
 #pe .tx{display:flex;flex-direction:column;gap:3px;min-width:0}
 #pe .tx b{font-size:16px;font-weight:900;font-stretch:110%;line-height:1.15}
 #pe .tx span{font-size:12px;font-weight:700;color:#BDBDBD;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pe .tx .cl{color:#FF6B6B;font-weight:900;text-transform:uppercase;font-size:11px;letter-spacing:.02em}
 #pe .ac{display:flex;gap:6px;margin-top:6px}
 #pe .ac button{height:32px;padding:0 12px;border:2px solid #3A3A3A;border-radius:16px;background:transparent;color:#FFFFFF;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.02em}
 #pe .ac .del{color:#FF6B5B}
@@ -166,8 +187,11 @@ a{color:inherit}
 <body>
 <div id="boot">Abriendo…</div>
 <div id="app"></div>
-<div id="pill" hidden></div>
-<button type="button" id="hb" aria-label="Volver al hotel" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5.5 9.5V20h13V9.5"></path><path d="M10 20v-5h4v5"></path></svg></button>
+<div id="bar" hidden>
+  <div class="ck" aria-live="off"><small id="ck-l"></small><b><span id="ck-t"></span><span id="pill" hidden></span></b></div>
+<button type="button" class="rb" id="hb" aria-label="Volver al hotel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5.5 9.5V20h13V9.5"></path><path d="M10 20v-5h4v5"></path></svg></button>
+  <button type="button" class="rb" id="qc" aria-label="Abrir la calculadora de wones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><rect x="5" y="3" width="14" height="18"></rect><path d="M8 7h8"></path><path d="M8 11.5h.5M11.75 11.5h.5M15.5 11.5h.5M8 15h.5M11.75 15h.5M15.5 15h.5M8 18.5h.5M11.75 18.5h.5M15.5 18.5h.5"></path></svg></button>
+</div>
 <div id="hs" hidden role="dialog" aria-modal="true" aria-labelledby="hs-name">
   <div class="bd" id="hs-bd"></div>
   <div class="sh" id="hs-sh">
@@ -180,7 +204,15 @@ a{color:inherit}
     <div class="tx st"><div class="lb">Para el taxi · enséñale esto</div><div class="ad" id="hs-ad" lang="ko"></div><div class="pl" lang="ko">이 주소로 가 주세요</div><button type="button" class="cp" id="hs-cp">Copiar dirección</button></div>
   </div>
 </div>
-<button type="button" id="qc" aria-label="Abrir la calculadora de wones" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><rect x="5" y="3" width="14" height="18"></rect><path d="M8 7h8"></path><path d="M8 11.5h.5M11.75 11.5h.5M15.5 11.5h.5M8 15h.5M11.75 15h.5M15.5 15h.5M8 18.5h.5M11.75 18.5h.5M15.5 18.5h.5"></path></svg></button>
+<div id="tx" hidden role="dialog" aria-modal="true" aria-labelledby="tx-l">
+  <div class="in">
+    <header><span id="tx-l">Enséñaselo al taxista</span><button type="button" class="x" id="tx-x" aria-label="Cerrar">×</button></header>
+    <p class="pl" lang="ko">이 주소로<br>가 주세요</p>
+    <div class="cd"><span class="nm" id="tx-n" lang="ko"></span><span class="ad" id="tx-a" lang="ko"></span></div>
+    <div class="es"><small>Qué pone</small><span id="tx-e"></span></div>
+    <button type="button" class="cp" id="tx-cp">Copiar la dirección en coreano</button>
+  </div>
+</div>
 <div id="tk" hidden>
   <header><h2 id="tk-t">Billete</h2><button type="button" id="tk-pdf" hidden>PDF original</button><button type="button" id="tk-x" aria-label="Cerrar billete">×</button></header>
   <div class="pg" id="tk-pg"><div id="tk-box"><img id="tk-img" alt="Billete del KTX" style="display:block;width:100%;height:auto;border-radius:4px;background:#FFFFFF"><img id="tk-qr" alt="Código QR del billete"></div><p class="hint">Toca el billete para ampliarlo</p></div>
@@ -209,10 +241,10 @@ a{color:inherit}
 <div id="tpls" hidden></div>
 
 <script>
-var BUILD = '202609271228-c9460035';
+var BUILD = '202609271659-7afa5f1d';
 var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
 var ITER = 600000;
-var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
+var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
 
 (function () {
   var KEY_STORE = 'corea.key.' + SALT_B64.slice(0, 8);
@@ -327,7 +359,7 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
   function start(payload) {
     document.getElementById('screen-css').textContent = payload.css;
     document.getElementById('tpls').innerHTML = payload.templates;
-    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null) };')();
+    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null), CIERRES: (typeof CIERRES !== "undefined" ? CIERRES : {}) };')();
     var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS, HOTELS = mod.HOTELS, DOCS = mod.DOCS;
     boot.hidden = true;
 
@@ -402,7 +434,97 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
     };
     DCLogic.prototype.forceUpdate = function () { if (this.__render) this.__render(); };
 
-    var app = document.getElementById('app'), pill = document.getElementById('pill');
+    var app = document.getElementById('app'), pill = document.getElementById('pill'), bar = document.getElementById('bar');
+    bar.hidden = false;
+
+    // ---------- barra de arriba: color de la pantalla y hora ----------
+    function barColor(host) {
+      var root = host.firstElementChild, bg = root ? getComputedStyle(root).backgroundColor : '';
+      var m = /(\d+)\D+(\d+)\D+(\d+)/.exec(bg || '');
+      if (!m) { bar.style.removeProperty('--bb'); bar.style.removeProperty('--bf'); return; }
+      var l = (0.299 * m[1] + 0.587 * m[2] + 0.114 * m[3]) / 255;
+      bar.style.setProperty('--bb', bg);
+      bar.style.setProperty('--bf', l > 0.55 ? '#111111' : '#FFFFFF');
+      var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', bg);
+    }
+    // En Corea enseña la hora de España, y en España la de Corea
+    var ckL = document.getElementById('ck-l'), ckT = document.getElementById('ck-t');
+    function hm(tz) { try { return new Intl.DateTimeFormat('es-ES', { timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); } catch (e) { return ''; } }
+    function tick() {
+      var inKorea = new Date().getTimezoneOffset() === -540;
+      ckL.textContent = inKorea ? 'En España' : 'En Corea';
+      ckT.textContent = hm(inKorea ? 'Europe/Madrid' : 'Asia/Seoul');
+    }
+    tick(); setInterval(tick, 20000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
+
+    // ---------- títulos que no caben: se encogen hasta caber ----------
+    var FIT = 'h1, h2, [style*="font-stretch: 125%"]';
+    function fitAll(host) {
+      var els = host.querySelectorAll(FIT);
+      for (var i = 0; i < els.length; i++) fitOne(els[i]);
+    }
+    // el motor repone el style de la plantilla en cada render: se guarda el original y el tamaño que cabe
+    function fitOne(el) {
+      if (!el.clientWidth) return;
+      var st = el.getAttribute('style') || '';
+      if (!(el.__set && st === el.__set)) el.__orig = st;
+      var key = el.textContent + '|' + el.__orig + '|' + el.clientWidth;
+      if (el.__fk === key) {
+        if (el.__fs && st !== el.__set) { el.style.fontSize = el.__fs; el.__set = el.getAttribute('style'); }
+        return;
+      }
+      el.__fk = key; el.__fs = ''; el.__set = '';
+      if (st !== el.__orig) el.setAttribute('style', el.__orig);
+      if (el.scrollWidth <= el.clientWidth + 1) return;
+      var base = parseFloat(getComputedStyle(el).fontSize), fs = base;
+      for (var n = 0; n < 14 && el.scrollWidth > el.clientWidth + 1 && fs > base * 0.5; n++) { fs = Math.floor(fs * 0.94); el.style.fontSize = fs + 'px'; }
+      el.__fs = el.style.fontSize; el.__set = el.getAttribute('style');
+    }
+    function refit() { if (!current) return; current.host.querySelectorAll(FIT).forEach(function (el) { el.__fk = null; }); fitAll(current.host); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
+    window.addEventListener('resize', refit);
+
+    // ---------- cierres: qué sitios cierran qué día del viaje ----------
+    var CIE = mod.CIERRES || {};
+    function tripDay() { var d = new Date(); return (d.getFullYear() === 2026 && d.getMonth() === 9 && d.getDate() >= 6 && d.getDate() <= 14) ? d.getDate() : 0; }
+    window.CIERRE = function (id, n) { var c = CIE[id]; return (c && c.cerrado && c.cerrado[String(n)]) || ''; };
+    window.CIERRE_REGLA = function (id) { var c = CIE[id]; return (c && c.regla) || ''; };
+    window.CIERRE_HOY = function (id) { var n = tripDay(); return n ? window.CIERRE(id, n) : ''; };
+    var DWN = { 6: 'mar', 7: 'mié', 8: 'jue', 9: 'vie', 10: 'sáb', 11: 'dom', 12: 'lun', 13: 'mar', 14: 'mié' };
+    // "Cerrado el mar 6 y el lun 12 (cierra los lunes)"
+    window.CIERRE_TXT = function (id) {
+      var c = CIE[id]; if (!c || !c.cerrado) return '';
+      var k = Object.keys(c.cerrado).map(Number).filter(function (n) { return DWN[n]; }).sort(function (a, b) { return a - b; });
+      if (!k.length) return '';
+      if (k.length >= 6) return 'Solo hay algunos días: ' + (c.regla || '');
+      var d = k.map(function (n) { return DWN[n] + ' ' + n; });
+      var list = d.length > 1 ? d.slice(0, -1).join(', ') + ' y ' + d[d.length - 1] : d[0];
+      return 'En el viaje cierra el ' + list + (c.regla ? '. ' + c.regla.replace(/\.$/, '') : '') + '.';
+    };
+
+    // ---------- enséñaselo al taxista (cualquier sitio) ----------
+    var tx = document.getElementById('tx'), txPushed = false;
+    function openTaxi(o) {
+      var nm = o.n || '', ad = o.a && o.a !== o.n ? o.a : '';
+      tx.style.setProperty('--tc', o.c || '#F5B83D');
+      document.getElementById('tx-n').textContent = nm;
+      var a = document.getElementById('tx-a'); a.textContent = ad; a.hidden = !ad;
+      document.getElementById('tx-e').textContent = '«Lléveme a esta dirección, por favor». ' + (o.es || '');
+      var cp = document.getElementById('tx-cp'); cp.textContent = 'Copiar la dirección en coreano'; cp.classList.remove('ok'); cp.setAttribute('data-t', o.a || o.n || '');
+      tx.hidden = false;
+      try { history.pushState({ tx: 1 }, ''); txPushed = true; } catch (e) { txPushed = false; }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { tx.classList.add('open'); }); });
+    }
+    function closeTaxi() { tx.classList.remove('open'); setTimeout(function () { if (!tx.classList.contains('open')) tx.hidden = true; }, 300); }
+    document.getElementById('tx-x').addEventListener('click', function () { if (txPushed) { txPushed = false; history.back(); } else closeTaxi(); });
+    window.addEventListener('popstate', function () { if (!tx.hidden && tx.classList.contains('open')) { txPushed = false; closeTaxi(); } });
+    document.getElementById('tx-cp').addEventListener('click', function () {
+      var b = this, t = b.getAttribute('data-t') || '';
+      function ok() { b.textContent = 'Copiada ✓'; b.classList.add('ok'); }
+      try { navigator.clipboard.writeText(t).then(ok, function () {}); } catch (e) {}
+    });
+    window.TAXI = function (t, ko, addr, col) { return 'taxi:' + encodeURIComponent(JSON.stringify({ n: ko || t, a: addr || ko || t, es: t, c: col || '' })); };
     var screens = {}, current = null;
     function build(name) {
       var tpl = document.getElementById('t-' + name);
@@ -417,6 +539,7 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
         var tmp = document.createElement('div');
         out.forEach(function (c) { tmp.appendChild(c); });
         morphKids(host, tmp);
+        if (!host.hidden) fitAll(host);
       };
       inst.__render();
       if (inst.componentDidMount) { try { inst.componentDidMount(); } catch (e) {} }
@@ -438,10 +561,12 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
       var s = screens[name] || build(name);
       var prev = current;
       if (current && current !== s) current.host.hidden = true;
+      document.body.classList.toggle('nobar', /^C-Taxi/.test(name));
       s.host.hidden = false;
       current = s;
-      document.getElementById('qc').hidden = name === 'C-Conversor' || !document.getElementById('tk').hidden;
-      document.getElementById('hb').hidden = !document.getElementById('tk').hidden;
+      document.getElementById('qc').hidden = name === 'C-Conversor';
+      barColor(s.host);
+      fitAll(s.host);
       if (prev !== s && s.inst.onShow) { try { s.inst.onShow(); } catch (e) {} }
       if (name === 'C-Docs') docsStatus();
       pill.hidden = !info.pill;
@@ -451,7 +576,7 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
     window.addEventListener('hashchange', function () { var hh = location.hash.slice(1); if (/^plan=/.test(hh)) { try { history.replaceState(null, '', location.pathname + location.search + '#hoy'); } catch (e) {} openImport(hh.slice(5)); return; } show(hh); });
 
     var tk = document.getElementById('tk');
-    document.getElementById('tk-x').addEventListener('click', function () { tk.hidden = true; document.getElementById('hb').hidden = false; document.getElementById('qc').hidden = !!(current && current.host.querySelector('[aria-label^="Cambiar a"]')); });
+    document.getElementById('tk-x').addEventListener('click', function () { tk.hidden = true; });
       document.getElementById('tk-pg').addEventListener('click', function () { this.classList.toggle('zoom'); });
       document.getElementById('qc').addEventListener('click', function () { go('C-Conversor'); });
       document.getElementById('tk-pdf').addEventListener('click', function () { openDoc(this.getAttribute('data-doc')); });
@@ -572,8 +697,9 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
         ids.forEach(function (id, i) {
           var p = planById(id); if (!p) return;
           var sub = [p.tag, p.ko].filter(Boolean).join(' · ');
+          var cl = window.CIERRE(id, peDay);
           h += '<li class="pr" data-i="' + i + '">' + thumb(p) +
-            '<div class="tx"><b>' + esc(p.t) + '</b><span>' + esc(sub) + '</span>' +
+            '<div class="tx"><b>' + esc(p.t) + '</b><span>' + esc(sub) + '</span>' + (cl ? '<span class="cl">Cerrado este día: ' + esc(cl.toLowerCase()) + '</span>' : '') +
             '<div class="ac"><button type="button" data-a="move">Mover</button><button type="button" class="del" data-a="del">Quitar</button></div></div>' +
             '<div class="ud"><button type="button" data-a="up" aria-label="Subir"' + (i === 0 ? ' disabled' : '') + '><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="square" aria-hidden="true"><path d="m6 15 6-6 6 6"></path></svg></button>' +
             '<button type="button" data-a="down" aria-label="Bajar"' + (i === ids.length - 1 ? ' disabled' : '') + '><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="square" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></div>';
@@ -626,8 +752,8 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
       });
       list.sort(function (a, b) { return (b.city === city) - (a.city === city); });
       box.innerHTML = list.map(function (p) {
-        var inHere = here.indexOf(p.id) >= 0, w = where[p.id];
-        return '<div class="cr">' + thumb(p) + '<div class="tx"><b>' + esc(p.t) + '</b><span>' + esc(w ? 'Ahora en: ' + w.join(', ') : 'Sin día') + '</span></div>' +
+        var inHere = here.indexOf(p.id) >= 0, w = where[p.id], cl = window.CIERRE(p.id, peDay);
+        return '<div class="cr">' + thumb(p) + '<div class="tx"><b>' + esc(p.t) + '</b><span>' + esc(w ? 'Ahora en: ' + w.join(', ') : 'Sin día') + '</span>' + (cl ? '<span class="cl">Ese día cierra</span>' : '') + '</div>' +
           '<button type="button" class="ad" data-a="pick" data-id="' + esc(p.id) + '"' + (inHere ? ' disabled' : '') + '>' + (inHere ? 'Ya está' : 'Añadir') + '</button></div>';
       }).join('') || '<p class="note">No hay ningún sitio con ese nombre. Prueba en «Sitio nuevo».</p>';
     }
@@ -861,6 +987,7 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
       var href = a.getAttribute('href') || '';
       if (href.indexOf('doc:') === 0) { e.preventDefault(); openDoc(href.slice(4)); return; }
       if (href.indexOf('edit:') === 0) { e.preventDefault(); openEditor(href.slice(5)); return; }
+      if (href.indexOf('taxi:') === 0) { e.preventDefault(); try { openTaxi(JSON.parse(decodeURIComponent(href.slice(5)))); } catch (err) {} return; }
       var m = /^\/?([\w-]+)\.dc\.html$/.exec(href);
       if (m) {
         e.preventDefault();
@@ -878,8 +1005,6 @@ var APP_SHA = 'zG7GJB8vxn2GANKZTB3UnWnW6DstoTu5t4qWALzSLl4=';
         var tkp = document.getElementById('tk-pdf'); tkp.hidden = !docById(tkDoc); tkp.setAttribute('data-doc', tkDoc);
         document.getElementById('tk-pg').classList.remove('zoom');
         document.getElementById('tk').hidden = false;
-        document.getElementById('qc').hidden = true;
-        document.getElementById('hb').hidden = true;
         return;
       }
       if (href.charAt(0) === '#' || href === '') e.preventDefault();
