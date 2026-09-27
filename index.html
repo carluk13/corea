@@ -335,10 +335,10 @@ body.nobar #bar{display:none}
 <div id="tpls" hidden></div>
 
 <script>
-var BUILD = '202609271739-5bb09137';
+var BUILD = '202609271940-1ca5db49';
 var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
 var ITER = 600000;
-var APP_SHA = 'dS7FR0HK/2YBfMnhFoXW/BcJMvjl/fsOU2r2GhXDse0=';
+var APP_SHA = '2X2dCTlN5lytFPJxcuDUbCLcl1wLqxieCJLfd+FO+R0=';
 
 (function () {
   var KEY_STORE = 'corea.key.' + SALT_B64.slice(0, 8);
@@ -453,9 +453,22 @@ var APP_SHA = 'dS7FR0HK/2YBfMnhFoXW/BcJMvjl/fsOU2r2GhXDse0=';
   function start(payload) {
     document.getElementById('screen-css').textContent = payload.css;
     document.getElementById('tpls').innerHTML = payload.templates;
-    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null), MAPA_F: (typeof MAPA_F !== "undefined" ? MAPA_F : ""), CIERRES: (typeof CIERRES !== "undefined" ? CIERRES : {}) };')();
+    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null), MAPA_F: (typeof MAPA_F !== "undefined" ? MAPA_F : ""), V2: (typeof V2 !== "undefined" ? V2 : null), CIERRES: (typeof CIERRES !== "undefined" ? CIERRES : {}) };')();
     var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS, HOTELS = mod.HOTELS, DOCS = mod.DOCS, MAPA = null, MIMG = {};
     boot.hidden = true;
+    // diseño nuevo (web/v2) salvo que en este móvil se haya elegido el clásico
+    function setDesign(d) { store('corea.design', d); location.hash = ''; location.reload(); }
+    if (payload.ui2 && mod.V2 && load('corea.design') !== 'clasico') {
+      try {
+        var st2 = document.createElement('style'); st2.textContent = payload.ui2.css; document.head.appendChild(st2);
+        new Function('K', payload.ui2.js)({ mod: mod, rawKey: RAWKEY, setDesign: setDesign, plainMapa: !!window.__PLAIN_MAPA });
+        return;
+      } catch (err) {
+        console.error(err);
+        var old = document.getElementById('v2'); if (old) old.remove();
+        document.body.classList.remove('v2');
+      }
+    }
 
     var HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
     var ONLY = /^\{\{\s*([^}]+?)\s*\}\}$/;
@@ -1451,6 +1464,7 @@ var APP_SHA = 'dS7FR0HK/2YBfMnhFoXW/BcJMvjl/fsOU2r2GhXDse0=';
       var href = a.getAttribute('href') || '';
       if (href.indexOf('doc:') === 0) { e.preventDefault(); openDoc(href.slice(4)); return; }
       if (href.indexOf('edit:') === 0) { e.preventDefault(); openEditor(href.slice(5)); return; }
+      if (href.indexOf('design:') === 0) { e.preventDefault(); setDesign(href.slice(7)); return; }
       if (href.indexOf('map:') === 0) { e.preventDefault(); openMap(href.slice(4)); return; }
       if (href.indexOf('taxi:') === 0) { e.preventDefault(); try { openTaxi(JSON.parse(decodeURIComponent(href.slice(5)))); } catch (err) {} return; }
       var m = /^\/?([\w-]+)\.dc\.html$/.exec(href);
