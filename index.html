@@ -175,6 +175,83 @@ body.nobar #bar{display:none}
 #pe .nv{display:inline-flex;align-items:center;gap:6px;margin:-4px 0 14px;color:var(--pc,#FFFFFF);font-size:13px;font-weight:900;text-transform:uppercase;text-decoration:none}
 #pe .note{margin:0 4px 12px;color:#BDBDBD;font-size:14px;font-weight:600;line-height:1.4}
 #pe .warn{margin:0 0 10px;padding:14px;border-radius:6px;background:#1E1E1E;font-size:15px;font-weight:700;line-height:1.4}
+#mp{position:fixed;inset:0;z-index:53;display:flex;justify-content:center;background:#111111;color:#FFFFFF;transform:translateY(100%);transition:transform 440ms cubic-bezier(.32,.72,0,1)}
+#mp.open{transform:none}
+#mp .in{display:flex;flex-direction:column;width:100%;max-width:440px;height:100%}
+#mp header{display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top,0px)) 12px 8px 16px;border-bottom:3px solid var(--pc,#FFFFFF)}
+#mp .tt{flex:1;min-width:0}
+#mp h2{margin:0;font-size:22px;font-weight:900;font-stretch:125%;text-transform:uppercase;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mp .sb{margin:4px 0 0;font-size:12px;font-weight:800;color:var(--pc,#BDBDBD);text-transform:uppercase;letter-spacing:.03em}
+#mp button{font:inherit;cursor:pointer;-webkit-appearance:none;appearance:none}
+#mp .x{flex-shrink:0;width:44px;height:44px;border:0;border-radius:50%;background:#262626;color:#FFFFFF;font-size:22px;font-weight:900}
+#mp-cty{display:flex;gap:6px;padding:8px 12px 0}
+#mp-cty button{height:34px;padding:0 14px;border:2px solid #3A3A3A;border-radius:17px;background:transparent;color:#FFFFFF;font-size:12px;font-weight:900;text-transform:uppercase}
+#mp-cty button[aria-pressed="true"]{background:#FFFFFF;border-color:#FFFFFF;color:#111111}
+#mp-map{position:relative;flex:0 0 50%;margin:8px 0 0;overflow:hidden;background:#E9E8E3;touch-action:none;user-select:none;-webkit-user-select:none}
+#mp-world{position:absolute;left:0;top:0;width:1440px;height:900px;transform-origin:0 0;will-change:transform}
+#mp-world svg{position:absolute;left:0;top:0;overflow:visible}
+#mp-world .bar{fill:#EFEADF}
+#mp-world path,#mp-world circle{vector-effect:non-scaling-stroke}
+#mp-world .ln1{stroke-width:.7px}#mp-world .ln2{stroke-width:1.3px}#mp-world .ln3{stroke-width:1.6px}
+#mp-world .mcase{fill:none;stroke:#FFFFFF;stroke-width:4px;opacity:.7}
+#mp-world .mline{fill:none;stroke-width:2.2px;opacity:.45}
+#mp-world .stns,#mp-world .stnames{display:none}
+#mp-world .rc{fill:none;stroke:#FFFFFF;stroke-width:8px;stroke-linecap:round;stroke-linejoin:round}
+#mp-world .rl{fill:none;stroke-width:4.5px;stroke-linecap:round;stroke-linejoin:round}
+#mp-world .rh{fill:none;stroke:#111111;stroke-width:2.5px;stroke-dasharray:1 7;stroke-linecap:round;opacity:.6}
+#mp-pins{position:absolute;inset:0;pointer-events:none}
+#mp-pins>*{position:absolute;left:0;top:0;pointer-events:auto}
+#mp .pn{display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin:-15px 0 0 -15px;border:3px solid #FFFFFF;border-radius:50%;box-sizing:border-box;background:var(--c);color:#111111;font-size:13px;font-weight:900;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:0}
+#mp .pn.cl{border-color:#C8102E;box-shadow:0 0 0 3px #FFFFFF,0 3px 10px rgba(0,0,0,.35)}
+#mp .pn.sel,#mp .pd.sel{scale:1.3}
+#mp .ph{display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin:-15px 0 0 -15px;border:0;border-radius:8px;background:#111111;color:#FFFFFF;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:0}
+#mp .pd{width:22px;height:22px;margin:-11px 0 0 -11px;border:0;border-radius:50%;background:transparent;padding:0}
+#mp .pd i{display:block;width:10px;height:10px;margin:6px;border:2px solid #FFFFFF;border-radius:50%;box-sizing:border-box;background:var(--c);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+#mp .pl{margin:0;translate:-50% 18px;white-space:nowrap;padding:2px 7px;border-radius:8px;background:rgba(255,255,255,.9);color:#111111;font-size:11px;font-weight:800;pointer-events:none}
+#mp .pb{margin:0;translate:-50% -50%;white-space:nowrap;color:#8E8A80;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;pointer-events:none}
+#mp .me{width:18px;height:18px;margin:-9px 0 0 -9px;border:3px solid #FFFFFF;border-radius:50%;box-sizing:border-box;background:#1A73E8;box-shadow:0 0 0 8px rgba(26,115,232,.25);pointer-events:none}
+#mp-ctl{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:8px}
+#mp-ctl button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:50%;background:#FFFFFF;color:#111111;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+#mp-ctl button[aria-pressed="true"]{background:#111111;color:#FFFFFF}
+#mp-msg{position:absolute;left:10px;right:64px;bottom:10px;padding:8px 12px;border-radius:8px;background:rgba(17,17,17,.88);color:#FFFFFF;font-size:13px;font-weight:700;line-height:1.3}
+#mp-sh{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:12px 12px calc(20px + env(safe-area-inset-bottom,0px))}
+#mp .bar2{display:flex;gap:8px;margin-bottom:10px}
+#mp .bt{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;height:44px;padding:0 12px;border:2px solid #3A3A3A;border-radius:6px;background:transparent;color:#FFFFFF;font-size:13px;font-weight:900;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+#mp .bt.pri{border-color:var(--pc);background:var(--pc);color:#111111}
+#mp .bt:active,#mp .ib2:active{transform:scale(.96)}
+#mp ol{list-style:none;margin:0;padding:0}
+#mp .st{display:grid;grid-template-columns:30px minmax(0,1fr) 34px 34px 34px;gap:6px;align-items:center;padding:6px 0}
+#mp .st .nm{display:flex;flex-direction:column;gap:2px;min-width:0;padding:4px 0;border:0;background:transparent;color:#FFFFFF;text-align:left}
+#mp .st .nm b{font-size:15px;font-weight:900;font-stretch:110%;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mp .st .nm span{font-size:12px;font-weight:700;color:#BDBDBD;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mp .st .nm .cl{color:#FF6B6B;font-weight:900;text-transform:uppercase;font-size:11px}
+#mp .num{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--pc);color:#111111;font-size:13px;font-weight:900}
+#mp .ib2{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:0;border-radius:6px;background:#262626;color:#FFFFFF;padding:0}
+#mp .ib2:disabled{opacity:.25}
+#mp .ib2.del{color:#FF6B6B}
+#mp .go{display:flex;align-items:center;gap:8px;margin:0 0 0 13px;padding:2px 0 2px 23px;border-left:2px dashed #3A3A3A;color:#BDBDBD;font-size:12px;font-weight:800;text-transform:uppercase;text-decoration:none;min-height:30px}
+#mp .go:active{color:var(--pc)}
+#mp .note{margin:0 2px 10px;color:#BDBDBD;font-size:13px;font-weight:600;line-height:1.4}
+#mp .back{display:flex;align-items:center;gap:6px;min-height:40px;margin:-6px 0 6px;padding:0 2px;border:0;background:transparent;color:#BDBDBD;font-size:13px;font-weight:900;text-transform:uppercase}
+#mp .card img{display:block;width:100%;height:170px;object-fit:cover;border-radius:6px;background:#222222}
+#mp .card h3{margin:12px 0 2px;font-size:22px;font-weight:900;font-stretch:110%;line-height:1.1}
+#mp .card .ko{font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;color:#BDBDBD}
+#mp .card .tg{display:inline-block;margin:8px 0 0;padding:2px 7px;border-radius:3px;background:var(--pc);color:#111111;font-size:11px;font-weight:900;text-transform:uppercase}
+#mp .card p{margin:10px 0 0;font-size:14px;font-weight:500;line-height:1.45;color:#E6E6E6}
+#mp .card .wr{margin:10px 0 0;padding:10px 12px;border-radius:6px;background:#2A1215;border:1px solid #5C1F27;color:#FFFFFF;font-size:13px;font-weight:700;line-height:1.35}
+#mp .card .wr b{color:#FF6B6B}
+#mp .card .bar2{margin:14px 0 0}
+#mp input{width:100%;box-sizing:border-box;min-height:48px;padding:10px 14px;border:2px solid #3A3A3A;border-radius:6px;background:#1A1A1A;color:#FFFFFF;font:inherit;font-size:16px;font-weight:700}
+#mp input:focus{outline:none;border-color:var(--pc)}
+#mp .rs{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #262626}
+#mp .rs .th{width:44px;height:44px;border-radius:4px;overflow:hidden;background:#262626}
+#mp .rs .th img{width:100%;height:100%;object-fit:cover;display:block}
+#mp .rs .nm{min-width:0;padding:0;border:0;background:transparent;color:#FFFFFF;text-align:left}
+#mp .rs .nm b{display:block;font-size:14px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mp .rs .nm span{display:block;font-size:12px;font-weight:700;color:#BDBDBD;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mp .rs .ad{height:34px;padding:0 12px;border:0;border-radius:17px;background:var(--pc);color:#111111;font-size:12px;font-weight:900;text-transform:uppercase}
+#mp .rs .ad:disabled{background:#262626;color:#8A8A8A}
+#mp label{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;font-size:12px;font-weight:900;text-transform:uppercase;color:#BDBDBD}
 #toast{position:fixed;left:50%;bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:58;display:flex;align-items:center;justify-content:space-between;gap:14px;width:min(calc(100% - 32px),408px);min-height:54px;box-sizing:border-box;padding:10px 10px 10px 16px;border-radius:8px;background:#FFFFFF;color:#111111;font-size:14px;font-weight:800;box-shadow:0 12px 30px -10px rgba(0,0,0,.7);transform:translate(-50%,20px);opacity:0;transition:transform 380ms cubic-bezier(.32,.72,0,1),opacity 260ms ease;pointer-events:none}
 #toast.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
 #toast span{flex:1;min-width:0;line-height:1.3}
@@ -226,6 +303,23 @@ body.nobar #bar{display:none}
   <header><div class="tt"><h2 id="pe-t"></h2><p class="sb" id="pe-s"></p></div><button type="button" class="x" id="pe-x" aria-label="Cerrar el editor">×</button></header>
   <div id="pe-bd"></div>
 </div>
+<div id="mp" hidden role="dialog" aria-modal="true" aria-labelledby="mp-t">
+  <div class="in">
+    <header><div class="tt"><h2 id="mp-t"></h2><p class="sb" id="mp-s"></p></div><button type="button" class="x" id="mp-x" aria-label="Cerrar el mapa">×</button></header>
+    <div id="mp-cty" role="group" aria-label="Ciudad" hidden></div>
+    <div id="mp-map">
+      <div id="mp-world"></div>
+      <div id="mp-pins"></div>
+      <div id="mp-ctl">
+        <button type="button" id="mp-me" aria-label="Dónde estoy" aria-pressed="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg></button>
+        <button type="button" id="mp-all" aria-label="Ver todos los sitios" aria-pressed="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="6" cy="7" r="2"></circle><circle cx="17" cy="6" r="2"></circle><circle cx="11" cy="13" r="2"></circle><circle cx="18" cy="17" r="2"></circle><circle cx="6" cy="18" r="2"></circle></svg></button>
+        <button type="button" id="mp-fit" aria-label="Encuadrar la ruta"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+      </div>
+      <div id="mp-msg" hidden></div>
+    </div>
+    <div id="mp-sh"></div>
+  </div>
+</div>
 <div id="toast" role="status" aria-live="polite"><span id="toast-t"></span><button type="button" id="toast-u" hidden>Deshacer</button></div>
 <div id="lock" hidden>
   <form id="lock-f" autocomplete="off">
@@ -241,10 +335,10 @@ body.nobar #bar{display:none}
 <div id="tpls" hidden></div>
 
 <script>
-var BUILD = '202609271659-7afa5f1d';
+var BUILD = '202609271739-5bb09137';
 var SALT_B64 = 'UOM3vdOta7X9puIjqspvcQ==';
 var ITER = 600000;
-var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
+var APP_SHA = 'dS7FR0HK/2YBfMnhFoXW/BcJMvjl/fsOU2r2GhXDse0=';
 
 (function () {
   var KEY_STORE = 'corea.key.' + SALT_B64.slice(0, 8);
@@ -359,8 +453,8 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
   function start(payload) {
     document.getElementById('screen-css').textContent = payload.css;
     document.getElementById('tpls').innerHTML = payload.templates;
-    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null), CIERRES: (typeof CIERRES !== "undefined" ? CIERRES : {}) };')();
-    var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS, HOTELS = mod.HOTELS, DOCS = mod.DOCS;
+    var mod = new Function(payload.scripts + '\nreturn { SCRIPTS: SCRIPTS, ASSETS: ASSETS, HOTELS: HOTELS, DOCS: (typeof DOCS !== "undefined" ? DOCS : []), PLANDATA: (typeof PLANDATA !== "undefined" ? PLANDATA : null), MAPA_F: (typeof MAPA_F !== "undefined" ? MAPA_F : ""), CIERRES: (typeof CIERRES !== "undefined" ? CIERRES : {}) };')();
+    var SCRIPTS = mod.SCRIPTS, ASSETS = mod.ASSETS, HOTELS = mod.HOTELS, DOCS = mod.DOCS, MAPA = null, MIMG = {};
     boot.hidden = true;
 
     var HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
@@ -400,6 +494,7 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
         if (v == null || v === false) continue;
         v = String(v);
         if (v.indexOf('asset:') === 0) v = ASSETS[v.slice(6)] || '';
+        else if (v.indexOf('m:') === 0) v = MIMG[v.slice(2)] || '';
         el.setAttribute(name, v);
       }
       if (tag === 'a') {
@@ -607,7 +702,9 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
     function kakaoQ(q) { return 'https://map.kakao.com/?q=' + encodeURIComponent(q); }
     function customPlan(id, c) {
       var q = (c.a || c.t || '').trim();
-      return { id: id, t: c.t, ko: /[가-힣]/.test(c.a || '') ? c.a : '', tag: c.tag || 'Añadido', img: '', d: c.d || '', cr: '', nv: naverQ(q), kk: kakaoQ(q), cp: q, custom: true };
+      var o = { id: id, t: c.t, ko: /[가-힣]/.test(c.a || '') ? c.a : '', tag: c.tag || 'Añadido', img: '', d: c.d || '', cr: '', nv: naverQ(q), kk: kakaoQ(q), cp: q, custom: true };
+      if (c.city && isFinite(c.x) && isFinite(c.y)) { o.city = c.city; o.x = +c.x; o.y = +c.y; o.lat = +c.lat; o.lon = +c.lon; if (!c.a) { o.nv = 'https://map.naver.com/p/search/' + c.lat + ',' + c.lon; o.cp = o.t; } }
+      return o;
     }
     function planById(id) {
       if (CAT[id]) return CAT[id];
@@ -627,8 +724,10 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
     window.PLANS = {
       forDay: function (n, def) {
         n = String(n);
-        if (!PS.days[n]) return def;
-        return PS.days[n].map(planById).filter(Boolean);
+        var ids = PS.days[n] || PDEF[n];
+        if (!ids) return def;
+        var tt = (PD.ttag || {})[n] || {};
+        return ids.map(planById).filter(Boolean).map(function (p) { return tt[p.id] ? Object.assign({}, p, { tag: tt[p.id] }) : p; });
       },
       isEdited: function (n) { return !!PS.days[String(n)]; },
       hasUpdate: function (n) { return !!PUPD[String(n)]; },
@@ -647,8 +746,9 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
     function prefresh() {
       Object.keys(screens).forEach(function (k) { try { screens[k].inst.forceUpdate(); } catch (e) {} });
       if (!pe.hidden) peRender();
+      if (window.__mpRefresh) window.__mpRefresh();
     }
-    function imgSrc(p) { return p && p.img ? (p.img.indexOf('asset:') === 0 ? ASSETS[p.img.slice(6)] || '' : p.img) : ''; }
+    function imgSrc(p) { return p && p.img ? (p.img.indexOf('asset:') === 0 ? ASSETS[p.img.slice(6)] || '' : (p.img.indexOf('m:') === 0 ? MIMG[p.img.slice(2)] || '' : p.img)) : ''; }
     var PIN_SVG = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>';
     function thumb(p) { var src = imgSrc(p); return '<div class="th">' + (src ? '<img alt="" src="' + esc(src) + '">' : PIN_SVG) + '</div>'; }
 
@@ -766,10 +866,13 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
       if (!days.length) { say('Todavía no has cambiado ningún día'); return; }
       var used = {};
       days.forEach(function (n) { PS.days[n].forEach(function (id) { if (PS.custom[id]) used[id] = PS.custom[id]; }); });
-      var code = b64u(JSON.stringify({ v: 1, d: PS.days, c: used }));
+      var who = '';
+      try { who = localStorage.getItem('corea.who') || ''; } catch (e) {}
+      if (!who) { who = (window.prompt('¿Quién manda los cambios? (Carlos, María o Cristina)') || '').trim().slice(0, 20); try { if (who) localStorage.setItem('corea.who', who); } catch (e) {} }
+      var code = b64u(JSON.stringify({ v: 1, d: PS.days, c: used, w: who }));
       var url = location.origin + location.pathname + '#plan=' + code;
       var names = days.sort(function (a, b) { return a - b; }).map(function (n) { var d = dayInfo(n); return d.dw.toLowerCase() + ' ' + n; });
-      var text = 'Cambios en los planes de Corea (' + names.join(', ') + '). Para aplicarlos, copia este mensaje entero y en la app entra en cualquier día › Editar › Recibir cambios.\n' + url;
+      var text = (who ? 'Cambios de ' + who + ' en los planes de Corea (' : 'Cambios en los planes de Corea (') + names.join(', ') + '). Toca el enlace para aplicarlos (o copia este mensaje entero y en la app: Editar › Recibir cambios).\n' + url;
       if (navigator.share) { navigator.share({ text: text }).catch(function () {}); return; }
       try { navigator.clipboard.writeText(text).then(function () { say('Copiado: pégalo en WhatsApp'); }, function () { say('No se ha podido copiar'); }); } catch (e) { say('No se ha podido copiar'); }
     }
@@ -780,12 +883,12 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
         var o = JSON.parse(unb64u(m[1]));
         if (!o || o.v !== 1 || typeof o.d !== 'object') return null;
         var d = {}, c = {};
-        Object.keys(o.c || {}).forEach(function (id) { var x = o.c[id]; if (x && x.t && /^c[\w]+$/.test(id)) c[id] = { t: String(x.t).slice(0, 60), a: String(x.a || '').slice(0, 120), tag: String(x.tag || '').slice(0, 24), d: String(x.d || '').slice(0, 300) }; });
+        Object.keys(o.c || {}).forEach(function (id) { var x = o.c[id]; if (x && x.t && /^c[\w]+$/.test(id)) { c[id] = { t: String(x.t).slice(0, 60), a: String(x.a || '').slice(0, 120), tag: String(x.tag || '').slice(0, 24), d: String(x.d || '').slice(0, 300) }; if (/^(seoul|gyeongju|busan)$/.test(x.city) && isFinite(x.x) && isFinite(x.y) && isFinite(x.lat) && isFinite(x.lon)) { c[id].city = x.city; c[id].x = +x.x; c[id].y = +x.y; c[id].lat = +x.lat; c[id].lon = +x.lon; } } });
         Object.keys(o.d).forEach(function (n) {
           if (!PDEF.hasOwnProperty(n) || !Array.isArray(o.d[n])) return;
           d[n] = o.d[n].filter(function (id) { return CAT[id] || c[id]; }).slice(0, 30);
         });
-        return Object.keys(d).length ? { d: d, c: c } : null;
+        return Object.keys(d).length ? { d: d, c: c, w: String(o.w || '').slice(0, 20) } : null;
       } catch (e) { return null; }
     }
     function openImport(code) {
@@ -804,7 +907,7 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
     }
     function peRenderConfirm() {
       var imp = peImport; if (!imp) { peView = 'recv'; return peRender(); }
-      var h = '<button type="button" class="back" data-a="recv">‹ Volver</button><p class="note">Esto es lo que cambia. Tus planes de estos días se sustituyen por los que te han mandado.</p>';
+      var h = '<button type="button" class="back" data-a="recv">‹ Volver</button><p class="note">' + (imp.w ? 'Cambios de ' + esc(imp.w) + '. ' : '') + 'Esto es lo que cambia: tus planes de estos días se sustituyen por los que te han mandado.</p>';
       Object.keys(imp.d).sort(function (a, b) { return a - b; }).forEach(function (n) {
         var d = dayInfo(n);
         var names = imp.d[n].map(function (id) { return CAT[id] ? CAT[id].t : imp.c[id].t; });
@@ -979,6 +1082,367 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
       }).catch(function () {});
     }, 4000);
 
+    // ---------- mapa del día (el mismo mapa que el planificador; fotos y mapas en un fichero cifrado aparte) ----------
+    var mp = document.getElementById('mp'), mpMap = document.getElementById('mp-map'), mpWorld = document.getElementById('mp-world');
+    var mpPins = document.getElementById('mp-pins'), mpSh = document.getElementById('mp-sh'), mpMsg = document.getElementById('mp-msg');
+    var MP = { n: '', city: 'seoul', view: 'list', sel: '', q: '', all: false, T: { s: 1, tx: 0, ty: 0 }, me: null, watch: null, pushed: false, newPt: null, drawn: '', moveEnd: 0 };
+    var HOT = PD.hotels || {}, mapaP = null, PINS = [];
+    var CITYN = { seoul: 'Seúl', gyeongju: 'Gyeongju', busan: 'Busan' };
+    var I_UP = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="square" aria-hidden="true"><path d="m6 15 6-6 6 6"></path></svg>';
+    var I_DOWN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="square" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>';
+    var I_X = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>';
+    var I_HOUSE = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5.5 9.5V20h13V9.5"></path></svg>';
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function loadMapa() {
+      if (MAPA) return Promise.resolve(MAPA);
+      if (mapaP) return mapaP;
+      if (!mod.MAPA_F) return Promise.reject(new Error('sin mapa'));
+      mapaP = fetch(mod.MAPA_F).then(function (r) { if (!r.ok) throw new Error('net ' + r.status); return r.arrayBuffer(); }).then(function (buf) {
+        return docKey().then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: new Uint8Array(buf, 0, 12) }, k, new Uint8Array(buf, 12)); });
+      }).then(function (plain) { MAPA = JSON.parse(new TextDecoder().decode(plain)); MIMG = MAPA.img || {}; prefresh(); return MAPA; });
+      mapaP.catch(function () { mapaP = null; });
+      return mapaP;
+    }
+    setTimeout(function () { loadMapa().catch(function () {}); }, 2500);
+
+    // sitios del día: índice en la lista del día + ficha
+    function mpItems(n) { return dayIds(n).map(function (id, i) { return { i: i, p: planById(id) }; }).filter(function (x) { return x.p; }); }
+    function mpCities(n) {
+      var out = [];
+      mpItems(n).forEach(function (x) { if (x.p.city && isFinite(x.p.x) && out.indexOf(x.p.city) < 0) out.push(x.p.city); });
+      if (!out.length) { var h = HOT[String(n)] || []; [h[1], h[0]].forEach(function (id) { var p = CAT[id]; if (p && p.city && !out.length) out.push(p.city); }); }
+      return out.length ? out : ['seoul'];
+    }
+    function mpHotels() { var h = HOT[MP.n] || ['', '']; return [CAT[h[0]], CAT[h[1]]].map(function (p) { return p && p.city === MP.city && isFinite(p.x) ? p : null; }); }
+    function shortName(p) { return p.t.length > 26 ? p.t.slice(0, 24) + '…' : p.t; }
+    function naverRoute(a, b) {
+      return 'nmap://route/public?slat=' + a.lat + '&slng=' + a.lon + '&sname=' + encodeURIComponent(a.ko || a.t) + '&dlat=' + b.lat + '&dlng=' + b.lon + '&dname=' + encodeURIComponent(b.ko || b.t) + '&appname=corea.bolsillo';
+    }
+    function smoothPath(pts) {
+      var d = 'M' + pts[0][0] + ',' + pts[0][1];
+      for (var i = 0; i < pts.length - 1; i++) {
+        var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2, t = 0.18;
+        d += ' C' + (p1[0] + (p2[0] - p0[0]) * t).toFixed(1) + ',' + (p1[1] + (p2[1] - p0[1]) * t).toFixed(1) + ' ' + (p2[0] - (p3[0] - p1[0]) * t).toFixed(1) + ',' + (p2[1] - (p3[1] - p1[1]) * t).toFixed(1) + ' ' + p2[0] + ',' + p2[1];
+      }
+      return d;
+    }
+
+    function openMap(n) {
+      MP.n = String(n); MP.view = 'list'; MP.sel = ''; MP.q = ''; MP.newPt = null;
+      var di = dayInfo(MP.n);
+      mp.style.setProperty('--pc', di.col);
+      document.getElementById('mp-t').textContent = di.dw + ' ' + di.n + ' oct';
+      document.getElementById('mp-s').textContent = 'Mapa y ruta del día';
+      MP.city = mpCities(MP.n)[0];
+      mp.hidden = false;
+      try { history.pushState({ mp: 1 }, ''); MP.pushed = true; } catch (e) { MP.pushed = false; }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { mp.classList.add('open'); }); });
+      mpRender();
+      if (!MAPA) { mpPins.innerHTML = ''; mpWorld.innerHTML = ''; MP.drawn = ''; mpMsgShow('Cargando el mapa…'); }
+      loadMapa().then(function () { mpMsgShow(''); mpDraw(true); }, function () {
+        mpMsgShow(navigator.onLine === false ? 'Sin conexión: el mapa se guarda en el móvil la primera vez que se abre con internet.' : 'No se ha podido cargar el mapa. Prueba otra vez con internet.');
+      });
+    }
+    function closeMap() { mp.classList.remove('open'); mpGps(false); setTimeout(function () { if (!mp.classList.contains('open')) mp.hidden = true; }, 460); }
+    document.getElementById('mp-x').addEventListener('click', function () { if (MP.pushed) { MP.pushed = false; history.back(); } else closeMap(); });
+    window.addEventListener('popstate', function () { if (!mp.hidden && mp.classList.contains('open') && tx.hidden && dv.hidden) { MP.pushed = false; closeMap(); } });
+    function mpMsgShow(t, ms) { mpMsg.textContent = t; mpMsg.hidden = !t; clearTimeout(mpMsg._t); if (t && ms) mpMsg._t = setTimeout(function () { mpMsg.hidden = true; }, ms); }
+
+    function mpCityTabs() {
+      var cs = mpCities(MP.n), box = document.getElementById('mp-cty');
+      if (cs.indexOf(MP.city) < 0) cs.push(MP.city);
+      box.hidden = cs.length < 2;
+      box.innerHTML = cs.map(function (c) { return '<button type="button" data-c="' + c + '" aria-pressed="' + (c === MP.city) + '">' + CITYN[c] + '</button>'; }).join('');
+    }
+    document.getElementById('mp-cty').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-c]'); if (!b) return;
+      MP.city = b.getAttribute('data-c'); MP.sel = ''; if (MP.view === 'place') MP.view = 'list';
+      mpRender(); mpDraw(true);
+    });
+
+    function mpDraw(fit) {
+      if (!MAPA) return;
+      var C = MAPA.cities[MP.city]; if (!C) return;
+      if (MP.drawn !== MP.city) {
+        mpWorld.innerHTML = '<svg width="1440" height="900" viewBox="0 0 1440 900">' + C.svg + '<g id="mp-rt"></g></svg>';
+        MP.drawn = MP.city; fit = true;
+      }
+      var col = dayInfo(MP.n).col, items = mpItems(MP.n), hs = mpHotels(), pts = [], h = '';
+      items.forEach(function (x) { if (x.p.city === MP.city && isFinite(x.p.x)) pts.push([x.p.x, x.p.y]); });
+      if (pts.length > 1) { var d = smoothPath(pts); h += '<path class="rc" d="' + d + '"></path><path class="rl" stroke="' + col + '" d="' + d + '"></path>'; }
+      if (hs[0] && pts.length) h += '<path class="rh" d="M' + hs[0].x + ',' + hs[0].y + 'L' + pts[0][0] + ',' + pts[0][1] + '"></path>';
+      if (hs[1] && pts.length) h += '<path class="rh" d="M' + pts[pts.length - 1][0] + ',' + pts[pts.length - 1][1] + 'L' + hs[1].x + ',' + hs[1].y + '"></path>';
+      document.getElementById('mp-rt').innerHTML = h;
+      mpPinsBuild(items, hs, col);
+      if (fit) mpFit(); else mpApply();
+    }
+    function mpPinsBuild(items, hs, col) {
+      var h = '', inDay = {}, C = MAPA.cities[MP.city];
+      PINS = [];
+      items.forEach(function (x) { inDay[x.p.id] = 1; });
+      (C.barrios || []).forEach(function (b) { PINS.push({ x: b.x, y: b.y, lab: 1 }); h += '<span class="pb">' + esc(b.name) + '</span>'; });
+      if (MP.all) {
+        Object.keys(CAT).forEach(function (id) {
+          var p = CAT[id];
+          if (p.city !== MP.city || inDay[id] || !isFinite(p.x) || p.kind === 'hotel') return;
+          PINS.push({ x: p.x, y: p.y });
+          h += '<button type="button" class="pd' + (MP.sel === id ? ' sel' : '') + '" data-id="' + esc(id) + '" aria-label="' + esc(p.t) + '" style="--c:' + (p.kind === 'comida' ? (p.catcol || '#FF8A4C') : '#6E6E73') + '"><i></i></button>';
+        });
+      }
+      hs.forEach(function (p, i) {
+        if (!p || (i === 1 && hs[0] && hs[0].id === p.id)) return;
+        PINS.push({ x: p.x, y: p.y });
+        h += '<button type="button" class="ph" data-id="' + esc(p.id) + '" aria-label="' + esc(p.t) + '">' + I_HOUSE + '</button>';
+      });
+      items.forEach(function (x, k) {
+        var p = x.p; if (p.city !== MP.city || !isFinite(p.x)) return;
+        PINS.push({ x: p.x, y: p.y });
+        h += '<button type="button" class="pn' + (window.CIERRE(p.id, MP.n) ? ' cl' : '') + (MP.sel === p.id ? ' sel' : '') + '" data-id="' + esc(p.id) + '" aria-label="' + (k + 1) + '. ' + esc(p.t) + '" style="--c:' + col + '">' + (k + 1) + '</button>';
+      });
+      var sp = MP.sel ? planById(MP.sel) : null;
+      if (sp && sp.city === MP.city && isFinite(sp.x)) { PINS.push({ x: sp.x, y: sp.y }); h += '<span class="pl">' + esc(shortName(sp)) + '</span>'; }
+      if (MP.view === 'new' && MP.newPt && MP.newPt.city === MP.city) { PINS.push({ x: MP.newPt.x, y: MP.newPt.y }); h += '<span class="pn sel" style="--c:#FFFFFF">+</span>'; }
+      if (MP.me && MP.me.city === MP.city) { PINS.push({ x: MP.me.x, y: MP.me.y }); h += '<span class="me"></span>'; }
+      mpPins.innerHTML = h;
+      var els = mpPins.children; for (var i = 0; i < els.length; i++) PINS[i].el = els[i];
+    }
+    function mpApply() {
+      var T = MP.T;
+      mpWorld.style.transform = 'translate(' + T.tx.toFixed(1) + 'px,' + T.ty.toFixed(1) + 'px) scale(' + T.s.toFixed(4) + ')';
+      for (var i = 0; i < PINS.length; i++) {
+        var q = PINS[i];
+        q.el.style.transform = 'translate(' + (q.x * T.s + T.tx).toFixed(1) + 'px,' + (q.y * T.s + T.ty).toFixed(1) + 'px)';
+        if (q.lab) q.el.style.opacity = T.s > (MP.city === 'seoul' ? 2.4 : 1.6) ? '1' : '0';
+      }
+    }
+    var mpRaf = 0;
+    function mpSchedule() { if (!mpRaf) mpRaf = requestAnimationFrame(function () { mpRaf = 0; mpApply(); }); }
+    function mpFit() {
+      var W = mpMap.clientWidth, H = mpMap.clientHeight, pts = [];
+      mpItems(MP.n).forEach(function (x) { if (x.p.city === MP.city && isFinite(x.p.x)) pts.push([x.p.x, x.p.y]); });
+      if (pts.length < 2) mpHotels().forEach(function (p) { if (p) pts.push([p.x, p.y]); });
+      if (!pts.length) { var s0 = W / 1440 * 1.6; MP.T = { s: s0, tx: W / 2 - 720 * s0, ty: H / 2 - 450 * s0 }; return mpApply(); }
+      var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      pts.forEach(function (p) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); });
+      var pad = 40, s = clamp(Math.min((W - pad * 2) / Math.max(x1 - x0, 30), (H - pad * 2) / Math.max(y1 - y0, 30)), 0.3, 12);
+      MP.T = { s: s, tx: W / 2 - (x0 + x1) / 2 * s, ty: H / 2 - (y0 + y1) / 2 * s };
+      mpApply();
+    }
+    function mpCenter(p) {
+      if (!p || !isFinite(p.x)) return;
+      var s = Math.max(MP.T.s, 3);
+      MP.T = { s: s, tx: mpMap.clientWidth / 2 - p.x * s, ty: mpMap.clientHeight / 2 - p.y * s };
+      mpApply();
+    }
+
+    // gestos: arrastrar, pellizcar, rueda y mantener pulsado para un sitio nuevo
+    var ptrs = {}, gest = null, lpT = null;
+    function gStart() {
+      var ids = Object.keys(ptrs);
+      gest = { T: { s: MP.T.s, tx: MP.T.tx, ty: MP.T.ty }, p: JSON.parse(JSON.stringify(ptrs)), moved: gest ? gest.moved : false };
+      if (ids.length >= 2) { var a = ptrs[ids[0]], b = ptrs[ids[1]]; gest.d = Math.hypot(a.x - b.x, a.y - b.y) || 1; gest.m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; }
+    }
+    mpMap.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('#mp-ctl') || e.target.closest('#mp-msg')) return;
+      ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (Object.keys(ptrs).length === 1) gest = null;
+      gStart();
+      clearTimeout(lpT);
+      if (Object.keys(ptrs).length === 1 && !e.target.closest('button') && MAPA) {
+        var r = mpMap.getBoundingClientRect(), sx = e.clientX - r.left, sy = e.clientY - r.top;
+        lpT = setTimeout(function () { if (gest && !gest.moved && Object.keys(ptrs).length === 1) { gest.moved = true; MP.moveEnd = Date.now(); mpNewAt(sx, sy); } }, 650);
+      }
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!gest || !ptrs[e.pointerId]) return;
+      ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(ptrs), r = mpMap.getBoundingClientRect();
+      if (ids.length >= 2 && gest.d) {
+        var a = ptrs[ids[0]], b = ptrs[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y), m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+        var s = clamp(gest.T.s * d / gest.d, 0.25, 16), k = s / gest.T.s;
+        MP.T = { s: s, tx: (m.x - r.left) - ((gest.m.x - r.left) - gest.T.tx) * k, ty: (m.y - r.top) - ((gest.m.y - r.top) - gest.T.ty) * k };
+        gest.moved = true;
+      } else if (ids.length === 1) {
+        var p0 = gest.p[ids[0]]; if (!p0) return;
+        var dx = e.clientX - p0.x, dy = e.clientY - p0.y;
+        if (!gest.moved && Math.hypot(dx, dy) < 7) return;
+        gest.moved = true;
+        MP.T = { s: gest.T.s, tx: gest.T.tx + dx, ty: gest.T.ty + dy };
+      }
+      clearTimeout(lpT);
+      mpSchedule();
+    });
+    function gEnd(e) {
+      if (!ptrs[e.pointerId]) return;
+      delete ptrs[e.pointerId]; clearTimeout(lpT);
+      if (gest && gest.moved) MP.moveEnd = Date.now();
+      if (Object.keys(ptrs).length) gStart(); else gest = null;
+    }
+    window.addEventListener('pointerup', gEnd); window.addEventListener('pointercancel', gEnd);
+    mpMap.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var r = mpMap.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+      var s = clamp(MP.T.s * Math.exp(-e.deltaY * 0.0015), 0.25, 16), k = s / MP.T.s;
+      MP.T = { s: s, tx: mx - (mx - MP.T.tx) * k, ty: my - (my - MP.T.ty) * k };
+      mpSchedule();
+    }, { passive: false });
+    mpMap.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    mpPins.addEventListener('click', function (e) {
+      if (Date.now() - MP.moveEnd < 350) return;
+      var b = e.target.closest('[data-id]'); if (!b) return;
+      MP.sel = b.getAttribute('data-id'); MP.view = 'place'; MP.newPt = null;
+      mpDraw(false); mpRender(); mpSh.scrollTop = 0;
+    });
+    function mpNewAt(sx, sy) {
+      var T = MP.T, P = MAPA.cities[MP.city].proj, x = (sx - T.tx) / T.s, y = (sy - T.ty) / T.s;
+      MP.newPt = { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, lat: +(P.lat1 - y / P.s).toFixed(6), lon: +(x / (P.k * P.s) + P.lon0).toFixed(6), city: MP.city };
+      MP.view = 'new'; MP.sel = '';
+      try { if (navigator.vibrate) navigator.vibrate(20); } catch (e) {}
+      mpDraw(false); mpRender();
+    }
+
+    // estás aquí (GPS; funciona sin datos)
+    function mpGps(on) {
+      var b = document.getElementById('mp-me');
+      if (!on) { if (MP.watch != null && navigator.geolocation) navigator.geolocation.clearWatch(MP.watch); MP.watch = null; MP.me = null; b.setAttribute('aria-pressed', 'false'); if (!mp.hidden) mpDraw(false); return; }
+      if (!navigator.geolocation) { mpMsgShow('Este móvil no deja usar la ubicación.', 3000); return; }
+      b.setAttribute('aria-pressed', 'true');
+      var first = true;
+      mpMsgShow('Buscando dónde estás…');
+      MP.watch = navigator.geolocation.watchPosition(function (pos) {
+        if (!MAPA) return;
+        var lat = pos.coords.latitude, lon = pos.coords.longitude, hit = null;
+        [MP.city].concat(Object.keys(MAPA.cities)).some(function (c) {
+          var P = MAPA.cities[c].proj, x = (lon - P.lon0) * P.k * P.s, y = (P.lat1 - lat) * P.s;
+          if (x > -500 && x < 1940 && y > -500 && y < 1400) { hit = { x: x, y: y, city: c }; return true; }
+          return false;
+        });
+        MP.me = hit;
+        if (!hit) mpMsgShow('Estás fuera de los mapas del viaje.', 3000);
+        else {
+          mpMsgShow('');
+          if (hit.city !== MP.city) { MP.city = hit.city; mpRender(); }
+          mpDraw(false);
+          if (first) mpCenter(hit);
+        }
+        first = false;
+      }, function (err) {
+        mpGps(false);
+        mpMsgShow(err.code === 1 ? 'Sin permiso para la ubicación: actívalo en los ajustes del navegador.' : 'No se encuentra la ubicación.', 4000);
+      }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+    }
+    document.getElementById('mp-me').addEventListener('click', function () { mpGps(MP.watch == null); });
+    document.getElementById('mp-all').addEventListener('click', function () {
+      MP.all = !MP.all; this.setAttribute('aria-pressed', String(MP.all)); mpDraw(false);
+      mpMsgShow(MP.all ? 'Todos los sitios de ' + CITYN[MP.city] + ': toca uno para verlo o añadirlo.' : '', 2500);
+    });
+    document.getElementById('mp-fit').addEventListener('click', mpFit);
+
+    // panel de abajo: la ruta, la ficha de un sitio, añadir de la lista y sitio nuevo
+    function mpRender() {
+      mpCityTabs();
+      if (MP.view === 'place') return mpRenderPlace();
+      if (MP.view === 'add') return mpRenderAdd();
+      if (MP.view === 'new') return mpRenderNew();
+      var items = mpItems(MP.n), hs = HOT[MP.n] || ['', ''], prev = CAT[hs[0]] || null, tt = (PD.ttag || {})[MP.n] || {}, h = '';
+      h += '<div class="bar2"><button type="button" class="bt pri" data-a="add">+ Añadir sitio</button><button type="button" class="bt" data-a="send">Enviar cambios</button></div>';
+      h += items.length ? '<p class="note">Sube y baja para cambiar el orden. Mantén pulsado el mapa para añadir un sitio que no esté en la lista.</p>'
+        : '<p class="note">Este día no tiene sitios todavía. Añádelos de la lista, toca uno en «Ver todos» o mantén pulsado el mapa para crear uno.</p>';
+      h += '<ol>';
+      items.forEach(function (x, k) {
+        var p = x.p, cl = window.CIERRE(p.id, MP.n);
+        if (prev && isFinite(prev.lat) && isFinite(p.lat) && prev.city === p.city && prev.id !== p.id) h += '<li><a class="go" href="' + naverRoute(prev, p) + '">Cómo ir desde ' + esc(shortName(prev)) + ' ›</a></li>';
+        var sub = cl ? '<span class="cl">Cerrado: ' + esc(cl.toLowerCase()) + '</span>' : esc([tt[p.id] || p.tag || '', p.city && p.city !== MP.city ? CITYN[p.city] : ''].filter(Boolean).join(' · ') || (isFinite(p.x) ? '' : 'Sin ubicación en el mapa'));
+        h += '<li class="st" data-i="' + x.i + '"><span class="num">' + (k + 1) + '</span><button type="button" class="nm" data-a="pick" data-id="' + esc(p.id) + '"><b>' + esc(p.t) + '</b><span>' + sub + '</span></button>' +
+          '<button type="button" class="ib2" data-a="up" aria-label="Subir ' + esc(p.t) + '"' + (k === 0 ? ' disabled' : '') + '>' + I_UP + '</button>' +
+          '<button type="button" class="ib2" data-a="down" aria-label="Bajar ' + esc(p.t) + '"' + (k === items.length - 1 ? ' disabled' : '') + '>' + I_DOWN + '</button>' +
+          '<button type="button" class="ib2 del" data-a="del" aria-label="Quitar ' + esc(p.t) + '">' + I_X + '</button></li>';
+        if (isFinite(p.lat)) prev = p;
+      });
+      var end = CAT[hs[1]];
+      if (end && prev && prev.city === end.city && isFinite(prev.lat) && prev.id !== end.id) h += '<li><a class="go" href="' + naverRoute(prev, end) + '">Cómo volver a ' + esc(shortName(end)) + ' ›</a></li>';
+      h += '</ol>';
+      mpSh.innerHTML = h;
+    }
+    function mpRenderPlace() {
+      var p = planById(MP.sel);
+      if (!p) { MP.view = 'list'; return mpRender(); }
+      var inDay = dayIds(MP.n).indexOf(p.id) >= 0, src = imgSrc(p), cl = window.CIERRE(p.id, MP.n), ct = window.CIERRE_TXT(p.id);
+      var h = '<button type="button" class="back" data-a="list">‹ Ruta del día</button><div class="card">';
+      if (src) h += '<img alt="" src="' + esc(src) + '">';
+      h += '<h3>' + esc(p.t) + '</h3>' + (p.ko ? '<div class="ko" lang="ko">' + esc(p.ko) + '</div>' : '') + (p.tag ? '<span class="tg">' + esc(p.tag) + '</span>' : '');
+      if (cl) h += '<div class="wr"><b>Este día cierra.</b> ' + esc(ct || cl) + '</div>'; else if (ct) h += '<div class="wr">' + esc(ct) + '</div>';
+      if (p.d) h += '<p>' + esc(p.d) + '</p>';
+      if (p.hr) h += '<p><b>Horario:</b> ' + esc(p.hr) + '</p>';
+      if (p.kind !== 'hotel') h += '<div class="bar2">' + (inDay ? '<button type="button" class="bt" data-a="rm" data-id="' + esc(p.id) + '">Quitar de este día</button>' : '<button type="button" class="bt pri" data-a="addid" data-id="' + esc(p.id) + '">Añadir a este día</button>') + '</div>';
+      h += '<div class="bar2"><a class="bt" href="' + esc(p.nv) + '" target="_blank" rel="noopener">Naver Map</a><a class="bt" href="' + esc(window.TAXI(p.t, p.ko, p.cp, dayInfo(MP.n).col)) + '">Taxi</a></div>';
+      mpSh.innerHTML = h + '</div>';
+    }
+    function mpRenderAdd() {
+      mpSh.innerHTML = '<button type="button" class="back" data-a="list">‹ Ruta del día</button><input type="search" id="mp-q" placeholder="Buscar: palacio, barbacoa, mercado…" autocomplete="off" value="' + esc(MP.q) + '"><div id="mp-res"></div>';
+      document.getElementById('mp-q').addEventListener('input', function () { MP.q = this.value; mpResults(); });
+      mpResults();
+    }
+    function mpResults() {
+      var box = document.getElementById('mp-res'); if (!box) return;
+      var here = dayIds(MP.n), q = norm(MP.q);
+      var list = Object.keys(CAT).map(function (k) { return CAT[k]; }).filter(function (p) {
+        return p.kind !== 'hotel' && p.kind !== 'tren' && (!q || norm(p.t + ' ' + (p.ko || '') + ' ' + (p.tag || '') + ' ' + (p.cat || '')).indexOf(q) >= 0);
+      });
+      list.sort(function (a, b) { return ((b.city === MP.city) - (a.city === MP.city)) || a.t.localeCompare(b.t, 'es'); });
+      box.innerHTML = list.slice(0, 120).map(function (p) {
+        var src = imgSrc(p), inHere = here.indexOf(p.id) >= 0, cl = window.CIERRE(p.id, MP.n);
+        return '<div class="rs"><div class="th">' + (src ? '<img alt="" loading="lazy" src="' + esc(src) + '">' : '') + '</div><button type="button" class="nm" data-a="pick" data-id="' + esc(p.id) + '"><b>' + esc(p.t) + '</b><span>' + esc((cl ? 'Ese día cierra · ' : '') + [p.tag, CITYN[p.city]].filter(Boolean).join(' · ')) + '</span></button>' +
+          '<button type="button" class="ad" data-a="addid" data-id="' + esc(p.id) + '"' + (inHere ? ' disabled' : '') + '>' + (inHere ? 'Ya está' : 'Añadir') + '</button></div>';
+      }).join('') || '<p class="note">No hay ningún sitio con ese nombre. Mantén pulsado el mapa donde esté para crearlo.</p>';
+    }
+    function mpRenderNew() {
+      mpSh.innerHTML = '<button type="button" class="back" data-a="list">‹ Cancelar</button><p class="note">Sitio nuevo en el punto marcado en el mapa. Ponle nombre; el nombre en coreano o la dirección ayudan a buscarlo en Naver.</p>' +
+        '<label>Nombre<input id="mp-nn" maxlength="60" placeholder="Ej.: Cafetería del mirador" autocomplete="off"></label>' +
+        '<label>Coreano o dirección (opcional)<input id="mp-na" maxlength="120" autocomplete="off"></label>' +
+        '<button type="button" class="bt pri" data-a="savenew" style="width:100%">Añadir a este día</button>';
+    }
+    mpSh.addEventListener('click', function (e) {
+      var a0 = e.target.closest('a');
+      if (a0 && (a0.getAttribute('href') || '').indexOf('taxi:') === 0) { e.preventDefault(); try { openTaxi(JSON.parse(decodeURIComponent(a0.getAttribute('href').slice(5)))); } catch (err) {} return; }
+      var b = e.target.closest('[data-a]'); if (!b) return;
+      var a = b.getAttribute('data-a'), li = b.closest('[data-i]'), i = li ? +li.getAttribute('data-i') : -1, n = MP.n, ids = dayIds(n), prev = ids.slice();
+      function undo() { setDay(n, prev); }
+      if (a === 'up' || a === 'down') {
+        var items = mpItems(n), k = -1;
+        items.forEach(function (x, j) { if (x.i === i) k = j; });
+        var o = items[a === 'up' ? k - 1 : k + 1];
+        if (k < 0 || !o) return;
+        var t = ids[i]; ids[i] = ids[o.i]; ids[o.i] = t; setDay(n, ids);
+      }
+      else if (a === 'del' && i >= 0) { var p = planById(ids[i]); ids.splice(i, 1); setDay(n, ids); say('Quitado: ' + (p ? p.t : ''), undo); }
+      else if (a === 'pick') {
+        var p2 = planById(b.getAttribute('data-id'));
+        MP.sel = p2 ? p2.id : ''; MP.view = 'place';
+        if (p2 && p2.city && MAPA && MAPA.cities[p2.city] && p2.city !== MP.city) MP.city = p2.city;
+        mpRender(); mpDraw(false); mpCenter(p2); mpSh.scrollTop = 0;
+      }
+      else if (a === 'list') { MP.view = 'list'; MP.sel = ''; MP.newPt = null; mpRender(); mpDraw(false); }
+      else if (a === 'add') { MP.view = 'add'; mpRender(); mpSh.scrollTop = 0; }
+      else if (a === 'send') sendChanges();
+      else if (a === 'addid') { var id = b.getAttribute('data-id'); ids.push(id); setDay(n, ids); say('Añadido: ' + planById(id).t, undo); }
+      else if (a === 'rm') { var k2 = ids.lastIndexOf(b.getAttribute('data-id')); if (k2 >= 0) { ids.splice(k2, 1); setDay(n, ids); say('Quitado del día', undo); } }
+      else if (a === 'savenew') {
+        var nm = (document.getElementById('mp-nn').value || '').trim(), ad = (document.getElementById('mp-na').value || '').trim();
+        if (!nm) { document.getElementById('mp-nn').focus(); say('Falta el nombre'); return; }
+        var q = MP.newPt, cid = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+        PS.custom[cid] = { t: nm.slice(0, 60), a: ad.slice(0, 120), tag: 'Añadido', d: '', city: q.city, x: q.x, y: q.y, lat: q.lat, lon: q.lon };
+        ids.push(cid); MP.view = 'list'; MP.newPt = null; setDay(n, ids);
+        say('Añadido: ' + nm, undo);
+      }
+    });
+    window.__mpRefresh = function () {
+      if (mp.hidden) return;
+      if (MP.view === 'add') mpResults(); else if (MP.view !== 'new') mpRender();
+      mpDraw(false);
+    };
+    window.addEventListener('resize', function () { if (!mp.hidden) mpApply(); });
+
     app.addEventListener('click', function (e) {
       var el = e.target;
       while (el && el !== app) { if (el.__h) { el.__h(e); break; } el = el.parentNode; }
@@ -987,6 +1451,7 @@ var APP_SHA = 'wlp+/MeQKTW7MmlMF43lYtNcDA/5gVY6vNG3NIKtAOc=';
       var href = a.getAttribute('href') || '';
       if (href.indexOf('doc:') === 0) { e.preventDefault(); openDoc(href.slice(4)); return; }
       if (href.indexOf('edit:') === 0) { e.preventDefault(); openEditor(href.slice(5)); return; }
+      if (href.indexOf('map:') === 0) { e.preventDefault(); openMap(href.slice(4)); return; }
       if (href.indexOf('taxi:') === 0) { e.preventDefault(); try { openTaxi(JSON.parse(decodeURIComponent(href.slice(5)))); } catch (err) {} return; }
       var m = /^\/?([\w-]+)\.dc\.html$/.exec(href);
       if (m) {

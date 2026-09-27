@@ -1,9 +1,9 @@
 // Corea de bolsillo · service worker
-var VERSION = '202609271659-7afa5f1d';
+var VERSION = '202609271739-5bb09137';
 var CORE = 'corea-core-' + VERSION;
 var FONTS = 'corea-fonts';
 var DOCS = 'corea-docs';
-var DOC_FILES = ["d/8e3f81b8a4c25e0e.bin", "d/1ac19cbe2550188b.bin", "d/ba505f4f12d8ad14.bin", "d/47b5d1967a4b52e1.bin", "d/ac7cfa617170aec8.bin", "d/166cc6ec3d80ba23.bin", "d/2980b6c2839b33bf.bin", "d/c62678a8cee6d136.bin", "d/48d3ae6a9ecb82a0.bin", "d/094adb882403cff3.bin", "d/8a5c8bece0a15490.bin", "d/0209b8ea2b0593ed.bin", "d/a757fc40f6a4188b.bin", "d/d288509586c75ec9.bin"];
+var DOC_FILES = ["d/8e3f81b8a4c25e0e.bin", "d/1ac19cbe2550188b.bin", "d/ba505f4f12d8ad14.bin", "d/47b5d1967a4b52e1.bin", "d/ac7cfa617170aec8.bin", "d/166cc6ec3d80ba23.bin", "d/2980b6c2839b33bf.bin", "d/c62678a8cee6d136.bin", "d/48d3ae6a9ecb82a0.bin", "d/094adb882403cff3.bin", "d/8a5c8bece0a15490.bin", "d/0209b8ea2b0593ed.bin", "d/a757fc40f6a4188b.bin", "d/d288509586c75ec9.bin", "d/m99147754d40c890.bin"];
 var FILES = ['./', 'index.html', 'app.bin', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 
 // Los documentos se guardan aparte y solo se descargan si cambian
