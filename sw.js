@@ -1,5 +1,5 @@
 // Corea de bolsillo · service worker
-var VERSION = '202609271132-ee4a8c80';
+var VERSION = '202609271228-c9460035';
 var CORE = 'corea-core-' + VERSION;
 var FONTS = 'corea-fonts';
 var DOCS = 'corea-docs';
